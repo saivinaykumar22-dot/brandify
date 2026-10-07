@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Your Brand. Your Products. Our Infrastructure.</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <header class="site-header">
+        <nav class="navbar" aria-label="Main navigation">
+
+            <a class="brand-logo" href="#top" aria-label="Brandify home">
+
+                <span class="brand-icon" aria-hidden="true">
+                    <svg
+                        viewBox="0 0 32 26"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M3 2.5H25.5L29.5 6.5V19.5L25.5 23.5H3V2.5Z"
+                            fill="currentColor"
+                        />
+                        <path
+                            d="M8 7L13 12.5L8 18"
+                            stroke="white"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </span>
+
+                <span class="brand-name">Brandify.</span>
+
+            </a>
+
+
+            <div class="nav-links" id="navLinks">
+
+                <a href="#products">Products</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#creators">For Creators</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#resources">Resources</a>
+
+            </div>
+
+
+            <div class="nav-actions">
+
+                <div class="public-nav-actions" id="publicNavActions">
+                    <a class="login-link" href="frontend/login.html">Login</a>
+                    <a class="nav-cta" href="frontend/signup.html">Start Building</a>
+                </div>
+
+                <div class="customer-account" id="customerAccount" hidden>
+                    <button class="account-trigger" id="accountTrigger" type="button" aria-expanded="false" aria-controls="accountDropdown">
+                        <span class="account-avatar" id="accountAvatar" aria-hidden="true">SV</span>
+                        <span class="account-label">My Brand</span>
+                        <span class="account-chevron" aria-hidden="true"></span>
+                    </button>
+                    <div class="account-dropdown" id="accountDropdown" hidden>
+                        <a href="frontend/dashboard.html">Dashboard</a>
+                        <a href="frontend/dashboard.html#orders">Orders</a>
+                        <a href="frontend/dashboard.html#brand">My Brand</a>
+                        <a href="frontend/dashboard.html#settings">Settings</a>
+                        <button type="button" id="homeLogoutButton">Logout</button>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <button
+                class="mobile-menu-button"
+                id="mobileMenuButton"
+                type="button"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
+                aria-controls="navLinks"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+        </nav>
+    </header>
+
+
+    <main id="top">
+
+        <!-- =================================================
+             HERO
+        ================================================== -->
+
+        <section class="hero" id="start">
+
+            <div class="hero-content">
+
+                <div class="hero-copy">
+
+                    <h1>
+                        Your Brand.<br>
+                        Your Products.<br>
+                        <span>Our Infrastructure.</span>
+                    </h1>
+
+                    <p class="hero-description">
+                        Launch your own branded products while we handle sourcing,
+                        manufacturing, private labeling, packaging, fulfillment,
+                        and shipping.
+                    </p>
+
+                        <div class="hero-actions hero-actions-centered">
+
+                        <a class="primary-button" href="#start">
+                            Start Building Your Brand
+                            <span class="button-arrow">→</span>
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     NEW INTERACTIVE PRODUCT VISUAL
+                     OLD .product-collection IS REMOVED
+                ================================================== -->
+
+                <div class="hero-visual">
+
+                    <div class="brand-input-wrap">
+
+                        <label for="creatorBrand">
+                            See your brand on your products
+                        </label>
+
+                        <div class="brand-input-box">
+
+                            <input
+                                type="text"
+                                id="creatorBrand"
+                                placeholder="Enter your brand name"
+                                maxlength="24"
+                                autocomplete="off"
+                                spellcheck="false"
+                                aria-label="Enter your brand name"
+                            >
+
+                            <span class="input-status">
+                                LIVE
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="product-stage" id="productStage">
+
+                        <div class="stage-glow"></div>
+
+                        <div
+                            class="organic-field"
+                            id="organicField"
+                            aria-hidden="true"
+                        ></div>
+
+
+                        <div
+                            class="product product-bottle"
+                            data-product="bottle"
+                            tabindex="0"
+                            aria-label="Bottle product"
+                        >
+
+                            <div class="product-shadow"></div>
+
+                            <div class="bottle">
+
+                                <div class="bottle-cap"></div>
+
+                                <div class="bottle-neck"></div>
+
+                                <div class="bottle-body">
+
+                                    <div class="brand-label">
+                                        <span class="dynamic-brand"></span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="product product-pouch"
+                            data-product="pouch"
+                            tabindex="0"
+                            aria-label="Pouch product"
+                        >
+
+                            <div class="product-shadow"></div>
+
+                            <div class="pouch">
+
+                                <div class="pouch-seal"></div>
+
+                                <div class="pouch-body">
+
+                                    <div class="brand-label">
+                                        <span class="dynamic-brand"></span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="product product-jar"
+                            data-product="jar"
+                            tabindex="0"
+                            aria-label="Jar product"
+                        >
+
+                            <div class="product-shadow"></div>
+
+                            <div class="jar">
+
+                                <div class="jar-lid"></div>
+
+                                <div class="jar-body">
+
+                                    <div class="brand-label">
+                                        <span class="dynamic-brand"></span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="product product-box"
+                            data-product="box"
+                            tabindex="0"
+                            aria-label="Box product"
+                        >
+
+                            <div class="product-shadow"></div>
+
+                            <div class="box">
+
+                                <div class="box-top"></div>
+
+                                <div class="box-front">
+
+                                    <div class="brand-label">
+                                        <span class="dynamic-brand"></span>
+                                    </div>
+
+                                </div>
+
+                                <div class="box-side"></div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PLACEHOLDER SECTIONS
+        ================================================== -->
+
+        <!-- =================================================
+     PREMIUM PRODUCT DISCOVERY
+================================================= -->
+
+<section class="products-section" id="products">
+
+    <div class="products-shell">
+
+        <div class="products-heading">
+
+            <div class="products-heading-row">
+
+                <div>
+                    <h2>
+                        Featured
+                        <span>Products.</span>
+                    </h2>
+                </div>
+
+                <p>
+                    Discover products you can make your own.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="product-showcase">
+            <article class="catalog-card featured-card product-catalog-featured-card">
+                <a class="featured-product-image" href="frontend/product-details.html?id=fashion-t-shirts" aria-label="View T-Shirts">
+                    <img src="frontend/images/products/fashion/02-t-shirt.png" alt="T-Shirts" loading="lazy">
+                </a>
+                <div class="catalog-content">
+                    <div class="catalog-meta"><span>FASHION</span><span>01</span></div>
+                    <h3>T-Shirts</h3>
+                    <p class="featured-product-price">Starting from <strong>₹250</strong></p>
+                    <a class="catalog-link" href="frontend/product-details.html?id=fashion-t-shirts">View Product <span>→</span></a>
+                </div>
+            </article>
+            <article class="catalog-card product-catalog-featured-card">
+                <a class="featured-product-image" href="frontend/product-details.html?id=fashion-hoodies" aria-label="View Hoodies">
+                    <img src="frontend/images/products/fashion/01-hoodie.png" alt="Hoodies" loading="lazy">
+                </a>
+                <div class="catalog-content">
+                    <div class="catalog-meta"><span>FASHION</span><span>02</span></div>
+                    <h3>Hoodies</h3>
+                    <p class="featured-product-price">Starting from <strong>₹450</strong></p>
+                    <a class="catalog-link" href="frontend/product-details.html?id=fashion-hoodies">View Product <span>→</span></a>
+                </div>
+            </article>
+            <article class="catalog-card product-catalog-featured-card">
+                <a class="featured-product-image" href="frontend/product-details.html?id=beauty-face-serum" aria-label="View Face Serum">
+                    <img src="frontend/images/products/beauty/03-serum.png" alt="Face Serum" loading="lazy">
+                </a>
+                <div class="catalog-content">
+                    <div class="catalog-meta"><span>BEAUTY</span><span>03</span></div>
+                    <h3>Face Serum</h3>
+                    <p class="featured-product-price">Starting from <strong>₹220</strong></p>
+                    <a class="catalog-link" href="frontend/product-details.html?id=beauty-face-serum">View Product <span>→</span></a>
+                </div>
+            </article>
+        </div>
+        <div class="products-bottom">
+            <span class="products-count"><span class="count-line"></span> EXPLORE THE BRANDIFY CATALOG</span>
+            <a class="primary-button" href="frontend/products.html">Explore the Collection <span class="button-arrow">→</span></a>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- =====================================================
+     HOW IT WORKS — SPLIT FRAME
+====================================================== -->
+
+<section class="how-it-works-cards" id="how-it-works" aria-labelledby="hiw-cards-heading">
+    <div class="hiw-cards-container">
+        <header class="hiw-cards-intro">
+            <p>How it works</p>
+            <h2 id="hiw-cards-heading">Build your brand in <span>3 easy steps.</span></h2>
+            <p>From product selection to fulfilled orders, Brandify gives you everything you need to launch with confidence.</p>
+        </header>
+
+        <div class="hiw-cards-grid">
+            <article class="hiw-card">
+                <figure class="hiw-card-image">
+                    <img src="assets/how-it-works/step-1-product-selection.png" alt="Brandify product catalog and brand customization workspace">
+                </figure>
+                <div class="hiw-card-content">
+                    <span class="hiw-card-number">1</span>
+                    <h3>Choose your product</h3>
+                    <p>Explore products that fit your audience, then choose the one that feels right for your brand.</p>
+                </div>
+            </article>
+
+            <article class="hiw-card">
+                <figure class="hiw-card-image">
+                    <img src="assets/how-it-works/step-2-branding-and-pricing.png" alt="Brandify storefront with pricing and store connection tools">
+                </figure>
+                <div class="hiw-card-content">
+                    <span class="hiw-card-number">2</span>
+                    <h3>Make it yours</h3>
+                    <p>Shape the label, packaging, product price, and storefront around the brand you want to build.</p>
+                </div>
+            </article>
+
+            <article class="hiw-card">
+                <figure class="hiw-card-image">
+                    <img src="assets/how-it-works/step-3-fulfillment.png" alt="Brandify fulfillment workflow with packaged orders">
+                </figure>
+                <div class="hiw-card-content">
+                    <span class="hiw-card-number">3</span>
+                    <h3>Launch and fulfill</h3>
+                    <p>Share your store with your audience. We handle the orders, packing, shipping, and operations.</p>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+
+       <!-- =====================================================
+     FOR CREATORS — COMPACT INTERACTIVE OVERVIEW
+====================================================== -->
+
+<section class="creators-section" id="creators" aria-labelledby="creators-heading">
+    <div class="creators-intro">
+        <p class="creators-eyebrow">For Creators</p>
+        <h2 id="creators-heading">Your audience is ready.<br><span>Give them something to own.</span></h2>
+        <p>Stay close to your ideas, your audience, and the story you want to tell. Brandify turns the work behind a physical product into a launch-ready brand.</p>
+    </div>
+
+<div class="creator-overview">
+
+    <!-- CREATOR SIDE -->
+    <div class="creator-overview-panel creator-panel">
+
+        <div class="creator-panel-top">
+            <span class="creator-panel-label">YOUR FOCUS</span>
+            <span class="creator-panel-number">01</span>
+        </div>
+
+        <h3>Build your brand.</h3>
+
+        <p>
+            Focus on your creativity, audience, and products.
+            Brandify handles the operational complexity.
+        </p>
+
+        <div class="creator-focus-list">
+
+            <button
+                type="button"
+                class="creator-focus-item"
+                data-creator-focus="brand"
+            >
+                <span>01</span>
+                <span>Build your identity</span>
+                <span>↗</span>
+            </button>
+
+            <button
+                type="button"
+                class="creator-focus-item"
+                data-creator-focus="product"
+            >
+                <span>02</span>
+                <span>Choose your products</span>
+                <span>↗</span>
+            </button>
+
+            <button
+                type="button"
+                class="creator-focus-item"
+                data-creator-focus="audience"
+            >
+                <span>03</span>
+                <span>Grow your audience</span>
+                <span>↗</span>
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- BRANDIFY SIDE -->
+    <div class="creator-overview-panel infrastructure-panel">
+
+        <div class="creator-panel-top">
+            <span class="creator-panel-label">BRANDIFY HANDLES</span>
+            <span class="creator-panel-number">02</span>
+        </div>
+
+        <h3>We run the infrastructure.</h3>
+
+        <p>
+            From sourcing to fulfillment, the operational
+            work stays behind your brand.
+        </p>
+
+       <div class="infrastructure-list">
+
+    <div class="infrastructure-item">
+        <span class="infrastructure-number">01</span>
+        <span>Sourcing & Manufacturing</span>
+    </div>
+
+    <div class="infrastructure-item">
+        <span class="infrastructure-number">02</span>
+        <span>Private Labeling & Packaging</span>
+    </div>
+
+    <div class="infrastructure-item">
+        <span class="infrastructure-number">03</span>
+        <span>Order Fulfillment</span>
+    </div>
+
+    <div class="infrastructure-item">
+        <span class="infrastructure-number">04</span>
+        <span>Shipping & Operations</span>
+    </div>
+
+</div>
+<div class="creator-panel-cta">
+    <a href="#start" class="primary-button">
+        Start Building
+        <span class="button-arrow">→</span>
+    </a>
+</div>
+    </div>
+
+</div>
+</section>
+
+<!-- END FOR CREATORS OVERVIEW -->
+
+
+        <section class="pricing-section" id="pricing" aria-labelledby="pricing-heading">
+            <div class="pricing-shell">
+                <div class="pricing-calculator">
+                    <p class="pricing-eyebrow">Pricing</p>
+                    <h2 id="pricing-heading">Your products,<br><span>your profit.</span></h2>
+
+                    <div class="pricing-breakdown" aria-label="Product profit breakdown">
+                        <div><span>Your set product price</span><strong id="retailPrice">$30.00</strong></div>
+                        <div><span>Our base product price</span><strong>$12.00</strong></div>
+                        <div><span>Your profit after sale</span><strong id="profitPrice">$18.00</strong></div>
+                    </div>
+
+                    <div class="pricing-volume">
+                        <div><span>Products sold per month</span><strong id="volumeValue">40</strong></div>
+                        <input id="pricingVolume" type="range" min="10" max="100" value="40" step="5" aria-label="Products sold per month">
+                    </div>
+
+                    <div class="pricing-total" aria-live="polite">
+                        <strong id="monthlyProfit">$720</strong>
+                        <span>estimated profit per month</span>
+                    </div>
+
+                    <a class="pricing-cta" href="#start">Start building <span aria-hidden="true">→</span></a>
+                </div>
+
+                <figure class="pricing-visual">
+                    <img src="assets/how-it-works/step-2-branding-and-pricing.png" alt="Brandify branded storefront, pricing controls, and store connections">
+                    <figcaption><span class="pricing-note-icon" aria-hidden="true">✓</span><div><strong>Ready to launch</strong><small>Your store and pricing are in one place.</small></div></figcaption>
+                </figure>
+            </div>
+        </section>
+
+
+        <section class="resources-section" id="resources" aria-labelledby="resources-heading">
+            <div class="resources-shell">
+                <header class="resources-heading" data-resource-reveal>
+                    <span class="resources-eyebrow">RESOURCES</span>
+                    <h2 id="resources-heading">Everything You Need to Launch</h2>
+                    <p>Everything you need to turn your product idea into a brand people can buy.</p>
+                </header>
+
+                <article class="resource-feature" data-resource-reveal aria-labelledby="launch-guide-title">
+                    <div class="resource-feature-copy">
+                        <span class="resource-label">FEATURED GUIDE</span>
+                        <h3 id="launch-guide-title">The Brandify Launch Guide</h3>
+                        <p>From choosing your first product to getting your first customer, learn the essential steps to launching your brand with Brandify.</p>
+                        <button class="resource-action" type="button" data-resource-coming-soon="The Brandify Launch Guide">Read the Guide <span aria-hidden="true">→</span></button><span class="resource-coming-soon">COMING SOON</span>
+                    </div>
+                    <div class="launch-journey-visual" role="img" aria-label="A launch journey from product to brand, price, launch, and customer">
+                        <div class="launch-journey-topline"><span>YOUR LAUNCH JOURNEY</span><span>01 — 05</span></div>
+                        <div class="launch-journey-steps">
+                            <div class="launch-journey-step"><span class="launch-step-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5zM4.5 7.8 12 12l7.5-4.2M12 12v8.5"/></svg></span><span>PRODUCT</span></div>
+                            <i aria-hidden="true"></i>
+                            <div class="launch-journey-step"><span class="launch-step-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM8 9h8M8 13h5"/></svg></span><span>BRAND</span></div>
+                            <i aria-hidden="true"></i>
+                            <div class="launch-journey-step"><span class="launch-step-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v18M16.5 7.5c-.7-1.2-2-1.8-4.1-1.8-2.3 0-3.9 1-3.9 2.7 0 4.2 7.8 1.7 7.8 6 0 1.7-1.5 3-4.2 3-2 0-3.5-.7-4.5-2"/></svg></span><span>PRICE</span></div>
+                            <i aria-hidden="true"></i>
+                            <div class="launch-journey-step launch-step-current"><span class="launch-step-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 19V5m0 14h14M8 15l3-4 3 2 5-7"/></svg></span><span>LAUNCH</span></div>
+                            <i aria-hidden="true"></i>
+                            <div class="launch-journey-step"><span class="launch-step-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3.5 20v-1.5a5.5 5.5 0 0 1 11 0V20M17 11a3 3 0 1 0 0-6m1 9a5 5 0 0 1 2.5 4.3V20"/></svg></span><span>CUSTOMER</span></div>
+                        </div>
+                        <div class="launch-journey-footer"><span>From first idea</span><span aria-hidden="true">↗</span><span>to first customer</span></div>
+                    </div>
+                </article>
+
+                <div class="resource-section-heading" data-resource-reveal>
+                    <div><span class="resource-label">LEARN</span><h3>Build with a little more clarity.</h3></div>
+                    <p>Practical guidance for each part of your brand journey.</p>
+                </div>
+                <div class="resource-category-grid">
+                    <article class="resource-card" data-resource-reveal>
+                        <div class="resource-card-top"><span class="resource-number">01</span><span class="resource-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5M8 10.5h5M10.5 8v5"/></svg></span></div>
+                        <span class="resource-card-category">GETTING STARTED</span><h4>Start Building Your Brand</h4><p>Learn the basics of Brandify and how to take your first product from idea to launch.</p>
+                        <button class="resource-action" type="button" data-resource-coming-soon="Getting Started guides">Explore Guides <span aria-hidden="true">→</span></button><span class="resource-coming-soon">COMING SOON</span>
+                    </article>
+                    <article class="resource-card" data-resource-reveal>
+                        <div class="resource-card-top"><span class="resource-number">02</span><span class="resource-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9zM4.5 7.8 12 12l7.5-4.2M12 12v8.5"/></svg></span></div>
+                        <span class="resource-card-category">PRODUCTS &amp; BRANDING</span><h4>Create Products People Remember</h4><p>Learn how to choose products, customize them, and build a strong brand identity.</p>
+                        <button class="resource-action" type="button" data-resource-coming-soon="Products and Branding resources">Explore <span aria-hidden="true">→</span></button><span class="resource-coming-soon">COMING SOON</span>
+                    </article>
+                    <article class="resource-card" data-resource-reveal>
+                        <div class="resource-card-top"><span class="resource-number">03</span><span class="resource-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19V5m0 14h16M7 15l4-4 3 2 5-6"/><path d="M15 7h4v4"/></svg></span></div>
+                        <span class="resource-card-category">SELLING &amp; MARKETING</span><h4>Turn Products Into Sales</h4><p>Practical resources for pricing, positioning, marketing, and reaching your first customers.</p>
+                        <button class="resource-action" type="button" data-resource-coming-soon="Selling and Marketing resources">Explore <span aria-hidden="true">→</span></button><span class="resource-coming-soon">COMING SOON</span>
+                    </article>
+                    <article class="resource-card" data-resource-reveal>
+                        <div class="resource-card-top"><span class="resource-number">04</span><span class="resource-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5zM3.5 7.8 12 12l8.5-4.2M12 12v9M7.5 5.2l9 4.6"/></svg></span></div>
+                        <span class="resource-card-category">FULFILLMENT</span><h4>From Order to Delivery</h4><p>Understand how manufacturing, labeling, packaging, fulfillment, and shipping work with Brandify.</p>
+                        <button class="resource-action" type="button" data-resource-coming-soon="Fulfillment resources">Learn More <span aria-hidden="true">→</span></button><span class="resource-coming-soon">COMING SOON</span>
+                    </article>
+                    <article class="resource-card" data-resource-reveal>
+                        <div class="resource-card-top"><span class="resource-number">05</span><span class="resource-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h2m4 0h2m-8 4h2m4 0h2m-8 3h8"/></svg></span></div>
+                        <span class="resource-card-category">BUSINESS TOOLS</span><h4>Make Smarter Decisions</h4><p>Use practical tools and guides to understand pricing, margins, product selection, and launch planning.</p>
+                        <button class="resource-action" type="button" data-resource-coming-soon="Business tools and guides">Explore Tools <span aria-hidden="true">→</span></button><span class="resource-coming-soon">COMING SOON</span>
+                    </article>
+                    <article class="resource-card" data-resource-reveal>
+                        <div class="resource-card-top"><span class="resource-number">06</span><span class="resource-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 1 2.4 5.7L4 20l.8-4.2A8 8 0 0 1 4 12Z"/><path d="M9 10a3 3 0 0 1 6 0c0 2-3 2-3 4m0 3h.01"/></svg></span></div>
+                        <span class="resource-card-category">HELP &amp; SUPPORT</span><h4>We’re Here When You Need Us</h4><p>Find answers, explore FAQs, or get help when you need assistance with your Brandify journey.</p>
+                        <button class="resource-action" type="button" data-resource-coming-soon="Help and Support">Get Help <span aria-hidden="true">→</span></button><span class="resource-coming-soon">COMING SOON</span>
+                    </article>
+                </div>
+
+                <aside class="resource-support" data-resource-reveal>
+                    <div><span class="resource-label">NEED HELP?</span><h3>We’re here to help you build your brand.</h3><p>Whether you’re choosing your first product or preparing to launch, find the answers you need.</p></div>
+                    <div class="resource-support-actions"><a class="secondary-button" href="#faq">Explore FAQs <span aria-hidden="true">→</span></a><a class="primary-button" href="frontend/signup.html">Contact Support <span class="button-arrow" aria-hidden="true">→</span></a></div>
+                </aside>
+
+                <div class="resource-final-cta" data-resource-reveal>
+                    <span class="resource-label">READY TO BUILD YOUR BRAND?</span><h3>Everything starts with your first product.</h3><a class="primary-button" href="frontend/signup.html">Start Building Your Brand <span class="button-arrow" aria-hidden="true">→</span></a>
+                </div>
+            </div>
+            <dialog class="resource-dialog" aria-labelledby="resourceDialogTitle" aria-describedby="resourceDialogMessage">
+                <div class="resource-dialog-mark" aria-hidden="true">B.</div><button class="resource-dialog-close" type="button" aria-label="Close">×</button>
+                <span class="resource-label">BRANDIFY RESOURCES</span><h3 id="resourceDialogTitle">Coming Soon</h3><p id="resourceDialogMessage">This resource is being prepared.</p><button class="primary-button resource-dialog-ok" type="button">Got it <span class="button-arrow" aria-hidden="true">→</span></button>
+            </dialog>
+        </section>
+
+
+        <section class="faq-section" id="faq" aria-labelledby="faq-heading">
+            <div class="faq-shell">
+                <header class="faq-heading">
+                    <span class="faq-eyebrow">FAQ</span>
+                    <h2 id="faq-heading">Questions? We've Got Answers.</h2>
+                    <p>Everything you need to know before launching your brand with Brandify.</p>
+                </header>
+
+                <div class="faq-list">
+                    <details class="faq-item">
+                        <summary class="faq-question">
+                            <span>What is Brandify?</span>
+                            <span class="faq-toggle" aria-hidden="true"></span>
+                        </summary>
+                        <div class="faq-answer"><div class="faq-answer-inner"><p>Brandify gives creators the infrastructure to launch their own branded products while Brandify handles the operational side such as sourcing, manufacturing, private labeling, packaging, fulfillment, and shipping.</p></div></div>
+                    </details>
+                    <details class="faq-item">
+                        <summary class="faq-question">
+                            <span>How does Brandify work?</span>
+                            <span class="faq-toggle" aria-hidden="true"></span>
+                        </summary>
+                        <div class="faq-answer"><div class="faq-answer-inner"><p>Choose a product, customize it, build your brand identity, set your selling price, and launch. When customers place orders, Brandify handles the fulfillment process.</p></div></div>
+                    </details>
+                    <details class="faq-item">
+                        <summary class="faq-question">
+                            <span>Can I customize the products?</span>
+                            <span class="faq-toggle" aria-hidden="true"></span>
+                        </summary>
+                        <div class="faq-answer"><div class="faq-answer-inner"><p>Yes. Brandify allows creators to customize eligible products and apply their own brand identity, including branding and packaging options where available.</p></div></div>
+                    </details>
+                    <details class="faq-item">
+                        <summary class="faq-question">
+                            <span>Do I need to manage inventory?</span>
+                            <span class="faq-toggle" aria-hidden="true"></span>
+                        </summary>
+                        <div class="faq-answer"><div class="faq-answer-inner"><p>Brandify manages the product and fulfillment infrastructure. Creators can focus on building their brand, selling products, and serving their customers.</p></div></div>
+                    </details>
+                    <details class="faq-item">
+                        <summary class="faq-question">
+                            <span>How does fulfillment work?</span>
+                            <span class="faq-toggle" aria-hidden="true"></span>
+                        </summary>
+                        <div class="faq-answer"><div class="faq-answer-inner"><p>Once an order is submitted for fulfillment, the product moves through the required process including manufacturing, labeling, packaging, fulfillment, and shipping.</p></div></div>
+                    </details>
+                    <details class="faq-item">
+                        <summary class="faq-question">
+                            <span>How do I get started?</span>
+                            <span class="faq-toggle" aria-hidden="true"></span>
+                        </summary>
+                        <div class="faq-answer"><div class="faq-answer-inner"><p>Choose your product, build your brand, complete the setup, and launch your brand through Brandify.</p></div></div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <section class="landing-final-cta" aria-labelledby="landing-cta-heading" data-final-cta-reveal>
+            <div class="landing-final-cta-inner">
+                <span class="landing-final-cta-eyebrow">READY TO BUILD YOUR BRAND?</span>
+                <h2 id="landing-cta-heading">Your brand starts with the right product.</h2>
+                <p>Choose your product. Build your brand. Let Brandify handle the infrastructure.</p>
+                <a class="primary-button" href="frontend/signup.html">Start Building Your Brand <span class="button-arrow" aria-hidden="true">→</span></a>
+            </div>
+        </section>
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
