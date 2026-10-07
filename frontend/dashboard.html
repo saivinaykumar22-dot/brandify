@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f8faf8">
+    <title>Dashboard | Brandify</title>
+    <link rel="stylesheet" href="css/onboarding.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="dashboard-body">
+    <div class="dashboard-shell">
+        <aside class="dashboard-sidebar" id="dashboardSidebar" aria-label="Main navigation">
+            <div class="dashboard-logo" aria-label="Brandify">
+                <span class="logo-mark"><span class="logo-chevron"></span></span>
+                <span class="logo-text">Brandify<span>.</span></span>
+            </div>
+            <div class="sidebar-brand"><span class="sidebar-brand-mark" id="sidebarBrandMark">B</span><span><strong id="sidebarBrandName">Your Brand</strong><small>Brand workspace</small></span></div>
+            <nav id="dashboardNavigation">
+                <p class="nav-caption">MAIN</p>
+                <button class="dashboard-nav-link active" data-view="dashboard"><span class="nav-icon">⌂</span>Dashboard</button>
+                <button class="dashboard-nav-link" data-view="catalog"><span class="nav-icon">⌕</span>Product Catalog</button>
+                <p class="nav-caption">MANAGE</p>
+                <button class="dashboard-nav-link" data-view="products"><span class="nav-icon">▦</span>My Products</button>
+                <button class="dashboard-nav-link" data-view="orders"><span class="nav-icon">▤</span>Orders</button>
+                <button class="dashboard-nav-link" data-view="customers"><span class="nav-icon">♙</span>Customers</button>
+                <p class="nav-caption">GROW</p>
+                <button class="dashboard-nav-link" data-view="analytics"><span class="nav-icon">▥</span>Analytics</button>
+                <button class="dashboard-nav-link" data-view="store"><span class="nav-icon">▣</span>Store</button>
+                <button class="dashboard-nav-link" data-view="channels"><span class="nav-icon">⌘</span>Sales Channels</button>
+                <p class="nav-caption">SETTINGS</p>
+                <button class="dashboard-nav-link" data-view="payouts"><span class="nav-icon">₹</span>Payouts</button>
+                <button class="dashboard-nav-link" data-view="settings"><span class="nav-icon">⚙</span>Settings</button>
+            </nav>
+            <div class="sidebar-bottom">
+                <button class="dashboard-nav-link" data-view="help"><span class="nav-icon">?</span>Help &amp; Support</button>
+                <div class="sidebar-user"><span class="user-avatar" id="sidebarAvatar">SV</span><span><strong id="sidebarUserName">Creator</strong><small>Creator account</small></span><button id="sidebarUserMenu" aria-label="Open account menu">···</button></div>
+            </div>
+        </aside>
+
+        <div class="dashboard-main-column">
+            <header class="dashboard-topbar">
+                <button class="mobile-menu-button" id="mobileMenuButton" aria-label="Open navigation" aria-expanded="false">☰</button>
+                <div class="topbar-page"><span>Workspace</span><span class="breadcrumb-divider">/</span><strong id="pageTitle">Dashboard</strong></div>
+                <div class="topbar-actions">
+                    <button class="notification-button" id="notificationButton" aria-label="Notifications"><span>🔔</span><i></i></button>
+                    <div class="creator-account-menu">
+                        <button class="topbar-brand-button topbar-account-trigger" id="creatorAccountTrigger" type="button" aria-haspopup="true" aria-expanded="false"><span class="topbar-brand-dot"></span><span id="topbarBrandName">Your Brand</span><span class="topbar-caret" aria-hidden="true"></span><span class="user-avatar topbar-avatar" id="topbarAvatar">SV</span></button>
+                        <div class="creator-account-dropdown" id="creatorAccountDropdown" hidden>
+                            <button type="button" data-account-view="brand">My Brand</button>
+                            <button type="button" data-account-view="settings">Settings</button>
+                            <button type="button" id="creatorAccountLogout">Logout</button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <main class="dashboard-content" id="dashboardContent" tabindex="-1"></main>
+        </div>
+    </div>
+    <div class="dashboard-overlay" id="dashboardOverlay"></div>
+    <div class="toast" id="dashboardToast" role="status" aria-live="polite"></div>
+    <script src="js/product-catalog.js"></script>
+    <script src="js/creator-data.js"></script>
+    <script src="js/order-workflow.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

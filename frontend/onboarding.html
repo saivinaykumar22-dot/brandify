@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Build Your Brand | Brandify.</title>
+
+    <link rel="stylesheet" href="css/onboarding.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <header class="onboarding-navbar">
+
+        <a href="../index.html" class="onboarding-logo">
+
+            <span class="logo-mark">
+                <span class="logo-chevron"></span>
+            </span>
+
+            <span class="logo-text">
+                Brandify<span>.</span>
+            </span>
+
+        </a>
+
+        <nav class="onboarding-nav-links">
+
+            <a href="../index.html#products">Products</a>
+            <a href="../index.html#how-it-works">How It Works</a>
+            <a href="../index.html#pricing">Pricing</a>
+            <a href="../index.html#resources">Resources</a>
+
+        </nav>
+
+        <!-- CREATOR PROFILE -->
+
+        <div class="creator-profile">
+
+            <button
+                type="button"
+                class="profile-trigger"
+                id="profileTrigger"
+                aria-expanded="false"
+            >
+
+                <span class="profile-avatar" id="profileAvatar">
+                    SV
+                </span>
+
+                <span class="profile-details">
+
+                    <strong id="profileName">
+                        Creator
+                    </strong>
+
+                    <small>
+                        Creator account
+                    </small>
+
+                </span>
+
+                <span class="profile-chevron" aria-hidden="true"></span>
+
+            </button>
+
+            <div class="profile-dropdown" id="profileDropdown">
+
+                <a href="#" id="myProfileLink">
+                    My Profile
+                </a>
+
+                <a href="#" id="accountSettingsLink">
+                    Account Settings
+                </a>
+
+                <button type="button" id="saveExitButton">
+                    Save & Exit
+                </button>
+
+                <div class="dropdown-divider"></div>
+
+                <button
+                    type="button"
+                    class="logout-button"
+                    id="logoutButton"
+                >
+                    Log Out
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- MAIN ONBOARDING -->
+
+    <main class="onboarding-main">
+
+        <!-- GLOBAL PROGRESS -->
+
+        <section class="global-progress">
+
+            <div class="progress-heading">
+
+                <span id="progressCount">
+                    1 of 9 completed
+                </span>
+
+                <span id="progressPercentage">
+                    10%
+                </span>
+
+                <button
+                    type="button"
+                    class="progress-toggle"
+                    id="progressToggle"
+                    aria-label="Collapse progress"
+                >
+                    ⌃
+                </button>
+
+            </div>
+
+            <div
+                class="progress-track"
+                id="progressTrack"
+                aria-label="11 percent completed"
+            >
+
+                <span class="progress-segment active"></span>
+
+                <span class="progress-segment"></span>
+                <span class="progress-segment"></span>
+                <span class="progress-segment"></span>
+                <span class="progress-segment"></span>
+                <span class="progress-segment"></span>
+                <span class="progress-segment"></span>
+                <span class="progress-segment"></span>
+                <span class="progress-segment"></span>
+
+            </div>
+
+        </section>
+
+
+        <!-- ONBOARDING LAYOUT -->
+
+        <section class="onboarding-layout">
+
+            <!-- LEFT BRAND PANEL -->
+
+            <aside class="onboarding-brand-panel">
+
+                <span class="brand-eyebrow">
+                    YOUR BRAND JOURNEY
+                </span>
+
+                <h1>
+                    Big dreams.
+                    <span>Start with a brand.</span>
+                </h1>
+
+                <p>
+                    Turn your ideas into real products.
+                    We handle the infrastructure.
+                </p>
+
+                <div class="brand-product-visual">
+
+                    <div class="visual-product visual-bag">
+                        Your<br>Brand<br>Here
+                    </div>
+
+                    <div class="visual-product visual-bottle">
+                        Your<br>Brand
+                    </div>
+
+                    <div class="visual-product visual-box">
+                        Brandify.
+                    </div>
+
+                </div>
+
+                <div class="brand-benefits">
+
+                    <div class="benefit-item">
+                        <span>✓</span>
+                        No inventory required
+                    </div>
+
+                    <div class="benefit-item">
+                        <span>✓</span>
+                        End-to-end fulfillment
+                    </div>
+
+                    <div class="benefit-item">
+                        <span>✓</span>
+                        Focus on your brand
+                    </div>
+
+                    <div class="benefit-item">
+                        <span>✓</span>
+                        Build and grow freely
+                    </div>
+
+                </div>
+
+            </aside>
+
+
+            <!-- DYNAMIC ONBOARDING CARD -->
+
+            <section class="onboarding-card" id="onboardingCard">
+
+                <div
+                    class="success-message"
+                    id="successMessage"
+                    role="status"
+                    aria-live="polite"
+                >
+
+                    <span>✓</span>
+
+                    <div>
+
+                        <strong id="successTitle">
+                            Account created successfully!
+                        </strong>
+                        <p id="successDescription">
+                            Your account is ready.
+                            Let's start building your brand.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div id="onboardingContent"></div>
+
+            </section>
+
+        </section>
+
+    </main>
+
+
+    <script src="js/creator-data.js"></script>
+    <script src="js/onboarding.js"></script>
+
+</body>
+
+</html>

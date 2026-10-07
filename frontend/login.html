@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Brandify — Log In</title>
+
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+
+<body class="login-page">
+
+    <main class="auth-page">
+
+        <!-- LEFT SIDE -->
+        <section class="auth-brand-panel">
+
+            <!-- LOGO -->
+            <a href="../index.html" class="auth-logo">
+                <span class="logo-mark">
+                    <span class="logo-chevron"></span>
+                </span>
+
+                <span class="logo-text">
+                    Brandify<span>.</span>
+                </span>
+            </a>
+
+            <!-- BRAND CONTENT -->
+            <div class="brand-content">
+
+                <span class="brand-eyebrow">
+                    WELCOME BACK
+                </span>
+
+                <h1>
+                    Your brand
+                    <span>starts here.</span>
+                </h1>
+
+                <p>
+                    Log in to continue building your products
+                    and growing your brand with Brandify.
+                </p>
+
+            </div>
+
+            <!-- FOOTER -->
+            <div class="brand-footer">
+
+                <span></span>
+
+                <p>
+                    Own your brand. We handle the infrastructure.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- RIGHT SIDE -->
+        <section class="auth-form-panel">
+
+            <div class="auth-form-container">
+
+                <!-- MOBILE LOGO -->
+                <div class="mobile-logo">
+
+                    <a href="../index.html" class="auth-logo">
+
+                        <span class="logo-mark">
+                            <span class="logo-chevron"></span>
+                        </span>
+
+                        <span class="logo-text">
+                            Brandify<span>.</span>
+                        </span>
+
+                    </a>
+
+                </div>
+
+
+                <!-- HEADER -->
+                <div class="auth-header">
+
+                    <span class="form-eyebrow">LOGIN</span>
+
+                    <h2>Welcome Back</h2>
+
+                    <p>
+                        Log in to continue building your brand.
+                    </p>
+
+                </div>
+
+
+                <!-- LOGIN FORM -->
+                <form
+                    id="loginForm"
+                    class="auth-form"
+                    novalidate
+                >
+
+                    <!-- EMAIL -->
+                    <div class="form-group">
+
+                        <label for="email">Email Address</label>
+
+                        <div class="input-wrapper">
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Enter your email address"
+                                autocomplete="email"
+                                required
+                                aria-describedby="emailError"
+                                aria-invalid="false"
+                            >
+
+                        </div>
+
+                        <span class="field-error" id="emailError"></span>
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                                aria-describedby="passwordError"
+                                aria-invalid="false"
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-target="password"
+                                aria-label="Show password"
+                                aria-pressed="false"
+                            >
+                                <span class="eye-icon"></span>
+                            </button>
+
+                        </div>
+
+                        <span class="field-error" id="passwordError"></span>
+
+                    </div>
+
+
+                    <!-- REMEMBER / FORGOT -->
+                    <div class="login-options">
+                        <a
+                            href="forgot-password.html"
+                            class="forgot-link"
+                        >
+                            Forgot password?
+                        </a>
+
+                    </div>
+
+                    <p class="login-message" id="loginMessage" role="alert" aria-live="polite"></p>
+
+
+                    <!-- SUBMIT -->
+                    <button
+                        type="submit"
+                        class="auth-submit"
+                        id="loginButton"
+                    >
+
+                        <span class="button-text">
+                            Log In
+                        </span>
+
+                        <span class="button-loader"></span>
+
+                        <span class="button-arrow">
+                            →
+                        </span>
+
+                    </button>
+
+                </form>
+
+
+                <!-- SIGNUP -->
+                <div class="auth-switch">
+
+                    <span>
+                        Don't have an account?
+                    </span>
+
+                    <a href="signup.html">
+                        Create Account →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="js/creator-data.js"></script>
+    <script src="js/admin-auth.js"></script>
+    <script src="js/auth.js"></script>
+
+</body>
+</html>

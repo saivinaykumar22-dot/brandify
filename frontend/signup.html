@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Create Account | Brandify.</title>
+
+    <link
+        rel="stylesheet"
+        href="css/auth.css"
+    >
+
+</head>
+
+
+<body>
+
+    <main class="auth-page">
+
+
+        <!-- =====================================================
+             LEFT SIDE — BRAND PANEL
+             ===================================================== -->
+
+        <section class="auth-brand-panel">
+
+
+            <!-- LOGO -->
+
+            <a
+                href="../index.html"
+                class="auth-logo"
+            >
+
+                <span class="logo-mark">
+                    <span class="logo-chevron"></span>
+                </span>
+
+                <span class="logo-text">
+                    Brandify<span>.</span>
+                </span>
+
+            </a>
+
+
+            <!-- BRAND CONTENT -->
+
+            <div class="brand-content">
+
+                <span class="brand-eyebrow">
+                    BUILD YOUR BRAND
+                </span>
+
+
+                <h1>
+                    Your brand
+                    <span>starts here.</span>
+                </h1>
+
+
+                <p>
+                    Create your account and start building products
+                    under your own brand.
+                </p>
+
+            </div>
+
+
+            <!-- BRAND FOOTER -->
+
+            <div class="brand-footer">
+
+                <span></span>
+
+                <p>
+                    Own your brand. We handle the infrastructure.
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =====================================================
+             RIGHT SIDE — FORM PANEL
+             ===================================================== -->
+
+        <section class="auth-form-panel">
+
+
+            <div class="auth-form-container">
+
+
+                <!-- MOBILE LOGO -->
+
+                <div class="mobile-logo">
+
+                    <a
+                        href="../index.html"
+                        class="auth-logo"
+                    >
+
+                        <span class="logo-mark">
+                            <span class="logo-chevron"></span>
+                        </span>
+
+                        <span class="logo-text">
+                            Brandify<span>.</span>
+                        </span>
+
+                    </a>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     HEADER
+                     ================================================= -->
+
+                <div class="auth-header">
+
+                    <span class="form-eyebrow">
+                        GET STARTED
+                    </span>
+
+
+                    <h2>
+                        Create your account
+                    </h2>
+
+
+                    <p>
+                        Start building your brand with Brandify.
+                    </p>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     SIGNUP FORM
+                     ================================================= -->
+
+                <form
+                    id="signupForm"
+                    class="auth-form"
+                    novalidate
+                >
+
+
+                    <!-- =================================================
+                         FULL NAME
+                         ================================================= -->
+
+                    <div class="form-group">
+
+                        <label for="fullName">
+                            Full name
+                        </label>
+
+
+                        <div class="input-wrapper">
+
+                            <input
+                                type="text"
+                                id="fullName"
+                                name="fullName"
+                                placeholder="Enter your full name"
+                                autocomplete="name"
+                            >
+
+                        </div>
+
+
+                        <span
+                            class="field-error"
+                            id="fullNameError"
+                        ></span>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         PHONE NUMBER
+                         ================================================= -->
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            Phone number
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                placeholder="Enter your phone number"
+                                autocomplete="tel"
+                                inputmode="tel"
+                                aria-describedby="phoneError"
+                                required
+                            >
+
+                        </div>
+
+                        <span class="field-error" id="phoneError"></span>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         EMAIL
+                         ================================================= -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email address
+                        </label>
+
+
+                        <div class="input-wrapper">
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Enter your email address"
+                                autocomplete="email"
+                            >
+
+                        </div>
+
+
+                        <span
+                            class="field-error"
+                            id="emailError"
+                        ></span>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         PASSWORD
+                         ================================================= -->
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+
+                        <div class="input-wrapper">
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Create a password"
+                                autocomplete="new-password"
+                            >
+
+
+                            <!-- SINGLE EYE ICON -->
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-target="password"
+                                aria-label="Show password"
+                            >
+
+                                <span class="eye-icon"></span>
+
+                            </button>
+
+                        </div>
+
+
+
+                        <!-- PASSWORD REQUIREMENTS -->
+
+                        <div class="password-requirements">
+
+                            <span id="lengthRequirement">
+
+                                <i></i>
+
+                                8+ characters
+
+                            </span>
+
+
+                            <span id="numberRequirement">
+
+                                <i></i>
+
+                                One number
+
+                            </span>
+
+
+                            <span id="letterRequirement">
+
+                                <i></i>
+
+                                One letter
+
+                            </span>
+
+                        </div>
+
+
+                        <span
+                            class="field-error"
+                            id="passwordError"
+                        ></span>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         CONFIRM PASSWORD
+                         ================================================= -->
+
+                    <div class="form-group">
+
+                        <label for="confirmPassword">
+                            Confirm password
+                        </label>
+
+
+                        <div class="input-wrapper">
+
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                placeholder="Confirm your password"
+                                autocomplete="new-password"
+                            >
+
+
+                            <!-- SAME SINGLE EYE ICON -->
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-target="confirmPassword"
+                                aria-label="Show password"
+                            >
+
+                                <span class="eye-icon"></span>
+
+                            </button>
+
+                        </div>
+
+
+                        <span
+                            class="field-error"
+                            id="confirmPasswordError"
+                        ></span>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         SUBMIT BUTTON
+                         ================================================= -->
+
+                    <button
+                        type="submit"
+                        class="auth-submit"
+                        id="signupButton"
+                    >
+
+                        <span class="button-text">
+                            Create Account
+                        </span>
+
+
+                        <span class="button-loader"></span>
+
+
+                        <span class="button-arrow">
+                            →
+                        </span>
+
+                    </button>
+
+
+                </form>
+
+
+
+                <!-- =================================================
+                     LOGIN SWITCH
+                     ================================================= -->
+
+                <div class="auth-switch">
+
+                    <span>
+                        Already have an account?
+                    </span>
+
+
+                    <a href="login.html">
+                        Log in
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+         ========================================================= -->
+
+    <script src="js/creator-data.js"></script>
+    <script src="js/auth.js"></script>
+
+</body>
+
+</html>

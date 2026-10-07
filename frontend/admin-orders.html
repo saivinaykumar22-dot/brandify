@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Orders | Brandify Admin</title>
+    <link rel="stylesheet" href="css/admin-orders.css">
+</head>
+<body class="admin-body">
+    <div class="admin-layout">
+        <div data-admin-shell>
+            <div class="admin-page-heading">
+                <div><h1>Orders</h1><p>Review fulfillment requests and manage official Brandify orders.</p></div>
+            </div>
+            <section class="admin-panel">
+                <h2>Pending fulfillment requests <span class="request-count" id="requestCount">0</span></h2>
+                <div id="requestReview"></div>
+            </section>
+            <section class="admin-panel">
+                <h2>Official orders</h2>
+                <div class="admin-toolbar">
+                    <input class="admin-input admin-search" id="orderSearch" type="search" placeholder="Search orders">
+                    <select class="admin-select admin-filter-select admin-status-filter" id="orderStatusFilter">
+                        <option value="">All statuses</option><option>Pending</option><option>Processing</option><option>Shipped</option><option>Out for Delivery</option><option>Delivered</option><option>Cancelled</option>
+                    </select>
+                </div>
+                <div id="ordersTable"></div>
+            </section>
+        </div>
+    </div>
+    <script src="js/product-catalog.js"></script>
+    <script src="js/order-workflow.js"></script>
+    <script src="js/admin-data.js"></script>
+    <script src="js/admin-auth.js"></script>
+    <script src="js/admin-shell.js"></script>
+    <script src="js/admin-orders.js"></script>
+</body>
+</html>

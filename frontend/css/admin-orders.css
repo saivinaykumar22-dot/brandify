@@ -1,0 +1,35 @@
+@import url("admin.css");
+@import url("admin-creator-theme.css");
+.request-count{display:inline-grid;min-width:21px;height:21px;place-items:center;margin-left:7px;padding:0 6px;border-radius:12px;background:#eaf5ef;color:#176446;font:700 10px var(--font-body);vertical-align:2px}
+.request-review-detail{margin-top:18px;padding:18px;border:1px solid var(--admin-line);border-radius:12px;background:#fbfdfb}
+.request-review-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:17px}
+.request-review-heading h3{margin:0 0 5px;color:var(--admin-ink);font:700 15px var(--font-body)}
+.request-review-heading p,.request-review-detail p{margin:0;color:var(--admin-muted);font-size:11px;line-height:1.6}
+.request-review-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:13px 0}
+.request-review-grid>div,.request-review-products{padding:13px;border:1px solid var(--admin-line);border-radius:9px;background:white}
+.request-review-detail h4{margin:0 0 8px;color:#718078;font-size:9px;letter-spacing:.7px;text-transform:uppercase}
+.request-review-grid p+p{margin-top:4px}
+.request-review-products{margin:13px 0}
+.request-product-detail{display:grid;gap:4px;padding:10px 0;border-bottom:1px solid #edf1ee;color:#344940;font-size:11px}
+.request-product-detail:last-child{border-bottom:0}
+.request-product-detail span,.request-product-detail small{color:#7e8b84;font-size:10px}
+.request-admin-note{margin:12px 0!important;padding:10px;border-radius:8px;background:#fff8e8;color:#896830!important}
+.order-status-management,.order-cancel-form{display:grid;gap:12px;margin-top:18px;padding:16px;border:1px solid var(--admin-line);border-radius:10px;background:#fbfdfb}
+.order-status-management h3{margin:0;color:var(--admin-ink);font:700 14px var(--font-body)}
+.order-status-management>p{margin:0;color:var(--admin-muted);font-size:11px}
+.order-cancel-form[hidden],.order-status-management[hidden]{display:none}
+.order-cancel-form textarea{width:100%;min-height:76px;margin-top:6px;padding:10px;border:1px solid var(--admin-line);border-radius:8px;font:400 12px var(--font-body);resize:vertical}
+.order-cancel-form label span{color:var(--admin-muted);font-weight:400}
+.order-cancel-action{border-color:#e7c8c8!important;color:#a84343!important}
+.order-status-terminal{margin-top:18px;padding:13px;border-radius:9px;background:#f5f8f6;color:var(--admin-muted);font-size:11px;line-height:1.6}
+.order-status-management .admin-form-actions,.order-cancel-form .admin-form-actions{flex-wrap:wrap}
+.order-status-modal{max-width:480px}
+.order-status-modal-form{display:grid;gap:12px;margin-top:16px}
+.order-status-modal-form .admin-field input{min-height:40px;font-size:12px}
+.order-status-modal-form .admin-form-actions{margin-top:8px}
+.request-reason-form{margin-top:13px;padding:13px;border:1px solid var(--admin-line);border-radius:9px;background:white}
+.request-reason-form label{display:block;margin-bottom:7px;color:#637169;font-size:10px;font-weight:700}
+.request-reason-form textarea{min-height:75px;resize:vertical}
+.admin-form-error{min-height:15px;margin-top:5px;color:#b53838;font-size:10px}
+.request-review-detail>.admin-form-actions{flex-wrap:wrap}
+@media(max-width:640px){.request-review-detail{padding:12px}.request-review-grid{grid-template-columns:1fr}.request-review-heading{align-items:center}.request-review-detail>.admin-form-actions{display:grid;grid-template-columns:1fr}.request-review-detail>.admin-form-actions .admin-button{width:100%}}

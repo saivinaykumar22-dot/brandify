@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Products | Brandify</title>
+    <link rel="stylesheet" href="css/onboarding.css">
+    <link rel="stylesheet" href="css/products.css">
+</head>
+<body class="product-page">
+    <header class="onboarding-navbar product-page-navbar">
+        <a href="../index.html" class="onboarding-logo"><span class="logo-mark"><span class="logo-chevron"></span></span><span class="logo-text">Brandify<span>.</span></span></a>
+        <nav class="product-page-nav" aria-label="Product navigation"><a href="../index.html">Home</a><a class="active" href="products.html">Products</a><a href="../index.html#how-it-works">How It Works</a></nav>
+        <a class="dashboard-button product-page-cta" href="onboarding.html">Start Building <span aria-hidden="true">→</span></a>
+    </header>
+    <main class="product-catalog-main">
+        <div class="product-catalog-heading"><span class="product-catalog-eyebrow">BRANDIFY CATALOG</span><h1>Products</h1><p>Find products to build your brand.</p></div>
+        <label class="catalog-search-wrap"><span aria-hidden="true">⌕</span><input type="search" id="catalogSearch" placeholder="Search products..." autocomplete="off" aria-label="Search products"></label>
+        <section class="catalog-category-section" aria-label="Filter products by category"><div class="catalog-category-heading"><h2>Browse categories</h2><span id="catalogCount"></span></div><div class="catalog-category-list" id="catalogCategories"></div></section>
+        <section class="catalog-results" aria-label="Product catalog"><div class="catalog-product-grid" id="catalogProducts"></div><div class="catalog-empty" id="catalogEmpty" hidden><span class="catalog-empty-icon">⌕</span><h2>No products found</h2><p>Try a different search or category.</p></div></section>
+    </main>
+    <script src="js/product-catalog.js"></script>
+    <script src="js/creator-data.js"></script>
+    <script src="js/products.js"></script>
+</body>
+</html>

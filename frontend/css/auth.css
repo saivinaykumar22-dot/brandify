@@ -1,0 +1,1526 @@
+/* =========================================================
+   BRANDIFY AUTHENTICATION
+   STEP 2 — SIGN UP
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap');
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   ROOT
+   ========================================================= */
+
+:root {
+    --font-body: "DM Sans", sans-serif;
+    --font-display: "Playfair Display", serif;
+
+    --brand-green: #237a55;
+    --brand-green-dark: #1b6245;
+    --brand-green-light: #eaf4ef;
+
+    --bg: #f7f8f5;
+    --white: #ffffff;
+
+    --text: #17201b;
+    --text-soft: #66706a;
+    --text-muted: #929a95;
+
+    --border: #dfe4e0;
+    --border-focus: #237a55;
+
+    --error: #c94a4a;
+
+    --radius: 12px;
+}
+
+
+/* =========================================================
+   HTML
+   ========================================================= */
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+/* =========================================================
+   BODY
+   ========================================================= */
+
+body {
+    min-height: 100vh;
+
+    font-family: var(--font-body);
+
+    background:
+        radial-gradient(
+            circle at 75% 20%,
+            rgba(31, 107, 69, 0.055),
+            transparent 28%
+        ),
+        var(--bg);
+
+    color: var(--text);
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.auth-page {
+    min-height: 100vh;
+
+    display: grid;
+
+    grid-template-columns: 0.95fr 1.05fr;
+}
+
+
+/* =========================================================
+   LEFT BRAND PANEL
+   ========================================================= */
+
+.auth-brand-panel {
+    position: relative;
+
+    min-height: 100vh;
+
+    padding: 42px 54px;
+
+    display: flex;
+    flex-direction: column;
+
+    background:
+        radial-gradient(
+            circle at 70% 30%,
+            rgba(35, 122, 85, 0.09),
+            transparent 42%
+        ),
+        #f0f4ef;
+
+    border-right: 1px solid #e1e7e2;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   BACKGROUND SHAPE
+   ========================================================= */
+
+.auth-brand-panel::after {
+    content: "";
+
+    position: absolute;
+
+    width: 460px;
+    height: 460px;
+
+    right: -220px;
+    bottom: -210px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(35, 122, 85, 0.10);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.auth-logo {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    width: fit-content;
+
+    text-decoration: none;
+
+    color: var(--text);
+}
+
+
+/* =========================================================
+   LOGO MARK
+   ========================================================= */
+
+.logo-mark {
+    position: relative;
+
+    width: 34px;
+    height: 27px;
+
+    flex: 0 0 34px;
+
+    background: var(--brand-green);
+
+    clip-path: polygon(
+        0 0,
+        78% 0,
+        100% 50%,
+        78% 100%,
+        0 100%
+    );
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* =========================================================
+   LOGO CHEVRON
+   ========================================================= */
+
+.logo-chevron {
+    position: relative;
+
+    width: 7px;
+    height: 7px;
+
+    border-top: 2px solid #ffffff;
+    border-right: 2px solid #ffffff;
+
+    transform: rotate(45deg);
+
+    margin-left: -3px;
+}
+
+
+/* =========================================================
+   WORDMARK
+   ========================================================= */
+
+.logo-text {
+    font-family: var(--font-display);
+
+    font-size: 25px;
+
+    line-height: 1;
+
+    font-weight: 600;
+
+    letter-spacing: -0.03em;
+
+    color: #17201b;
+}
+
+
+.logo-text span {
+    color: #17201b;
+}
+
+
+/* =========================================================
+   BRAND CONTENT
+   ========================================================= */
+
+.brand-content {
+    position: relative;
+
+    z-index: 1;
+
+    margin: auto 0;
+
+    max-width: 480px;
+}
+
+
+.brand-eyebrow,
+.form-eyebrow {
+    display: block;
+
+    margin-bottom: 18px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    color: var(--brand-green);
+}
+
+
+.brand-content h1 {
+    max-width: 700px;
+
+    font-family: var(--font-display);
+
+    font-size: clamp(
+        50px,
+        5.4vw,
+        78px
+    );
+
+    line-height: 0.98;
+
+    font-weight: 600;
+
+    letter-spacing: -0.045em;
+
+    color: #172019;
+}
+
+.brand-content h1 span {
+    color: #1f6b45;
+}
+
+
+.brand-content p {
+    margin: 0;
+    max-width: 620px;
+
+    font-family: var(--font-body);
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 1.7;
+
+    color: #61706a;
+}
+
+
+/* =========================================================
+   BRAND FOOTER
+   ========================================================= */
+
+.brand-footer {
+    position: relative;
+
+    z-index: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.brand-footer span {
+    width: 28px;
+    height: 1px;
+
+    background: var(--brand-green);
+}
+
+
+.brand-footer p {
+    font-size: 11px;
+
+    color: var(--text-muted);
+}
+
+
+/* =========================================================
+   RIGHT FORM PANEL
+   ========================================================= */
+
+.auth-form-panel {
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 50px 40px;
+
+    background: var(--white);
+}
+
+
+.auth-form-container {
+    width: 100%;
+
+    max-width: 430px;
+}
+
+
+/* =========================================================
+   MOBILE LOGO
+   ========================================================= */
+
+.mobile-logo {
+    display: none;
+
+    margin-bottom: 48px;
+}
+
+
+/* =========================================================
+   FORM HEADER
+   ========================================================= */
+
+.auth-header {
+    margin-bottom: 32px;
+}
+
+
+.form-eyebrow {
+    margin-bottom: 10px;
+}
+
+
+.auth-header h2 {
+    font-size: 32px;
+
+    line-height: 1.15;
+
+    letter-spacing: -1.2px;
+
+    font-weight: 650;
+}
+
+
+.auth-header p {
+    margin-top: 9px;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    color: var(--text-soft);
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.auth-form {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 19px;
+}
+
+
+.form-group {
+    width: 100%;
+}
+
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    color: #38413c;
+}
+
+
+/* =========================================================
+   INPUT
+   ========================================================= */
+
+.input-wrapper {
+    position: relative;
+}
+
+
+.input-wrapper input {
+    width: 100%;
+
+    height: 50px;
+
+    padding: 0 15px;
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    outline: none;
+
+    background: #fcfdfc;
+
+    color: var(--text);
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.input-wrapper input::placeholder {
+    color: #a2aaa5;
+}
+
+
+.input-wrapper input:hover {
+    border-color: #cbd3ce;
+}
+
+
+.input-wrapper input:focus {
+    border-color: var(--border-focus);
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 3px rgba(35, 122, 85, 0.08);
+}
+
+
+/* =========================================================
+   REMOVE BROWSER / EDGE PASSWORD ICON
+   ========================================================= */
+
+input::-ms-reveal,
+input::-ms-clear {
+    display: none;
+}
+
+
+/* =========================================================
+   PASSWORD INPUT SPACE
+   ========================================================= */
+
+.input-wrapper input[type="password"],
+.input-wrapper input[type="text"] {
+    padding-right: 55px;
+}
+
+
+/* =========================================================
+   ERROR INPUT
+   ========================================================= */
+
+.input-wrapper.input-error input {
+    border-color: var(--error);
+}
+
+
+.input-wrapper.input-error input:focus {
+    box-shadow:
+        0 0 0 3px rgba(201, 74, 74, 0.08);
+}
+
+
+/* =========================================================
+   PASSWORD TOGGLE
+   ONE ICON ONLY
+   ========================================================= */
+
+.password-toggle {
+    position: absolute;
+
+    right: 12px;
+
+    top: 50%;
+
+    width: 30px;
+    height: 30px;
+
+    padding: 0;
+    margin: 0;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    transform: translateY(-50%);
+
+    z-index: 5;
+}
+
+
+.password-toggle.visible {
+    display: flex;
+}
+
+
+/* =========================================================
+   EARLIER SIMPLE EYE ICON
+   ========================================================= */
+
+.eye-icon {
+    position: relative;
+
+    display: block;
+
+    width: 20px;
+    height: 13px;
+
+    border: 1.7px solid #17201b;
+
+    border-radius: 50% / 65%;
+
+    transition:
+        border-color 0.2s ease;
+}
+
+
+/* =========================================================
+   EYE PUPIL
+   ========================================================= */
+
+.eye-icon::before {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 5px;
+    height: 5px;
+
+    border: 1.5px solid #17201b;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    transform: translate(-50%, -50%);
+}
+
+
+/* =========================================================
+   CROSSED EYE
+   ========================================================= */
+
+.eye-icon.crossed::after {
+    content: "";
+
+    position: absolute;
+
+    left: -2px;
+    top: 5px;
+
+    width: 23px;
+    height: 1.7px;
+
+    background: #17201b;
+
+    transform: rotate(-35deg);
+
+    transform-origin: center;
+}
+
+
+/* =========================================================
+   EYE HOVER
+   ========================================================= */
+
+.password-toggle:hover .eye-icon {
+    border-color: var(--brand-green);
+}
+
+
+.password-toggle:hover .eye-icon::before {
+    border-color: var(--brand-green);
+}
+
+
+.password-toggle:hover .eye-icon.crossed::after {
+    background: var(--brand-green);
+}
+
+
+/* =========================================================
+   PASSWORD REQUIREMENTS
+   ========================================================= */
+
+.password-requirements {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin-top: 9px;
+}
+
+
+.password-requirements span {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    font-size: 10px;
+
+    color: var(--text-muted);
+
+    transition:
+        color 0.2s ease;
+}
+
+
+.password-requirements i {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #cbd2cd;
+
+    transition:
+        background 0.2s ease;
+}
+
+
+.password-requirements span.valid {
+    color: var(--brand-green);
+}
+
+
+.password-requirements span.valid i {
+    background: var(--brand-green);
+}
+
+
+/* =========================================================
+   ERROR MESSAGE
+   ========================================================= */
+
+.field-error {
+    display: block;
+
+    min-height: 0;
+
+    margin-top: 6px;
+
+    font-size: 10px;
+
+    line-height: 1.4;
+
+    color: var(--error);
+}
+
+
+.field-error:empty {
+    display: none;
+}
+
+
+/* =========================================================
+   TERMS
+   ========================================================= */
+
+.terms-group {
+    margin-top: 2px;
+}
+
+
+.checkbox-label {
+    display: flex;
+
+    align-items: flex-start;
+
+    position: relative;
+
+    cursor: pointer;
+}
+
+
+.checkbox-label input {
+    position: absolute;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+
+.custom-checkbox {
+    flex: 0 0 17px;
+
+    width: 17px;
+    height: 17px;
+
+    margin-top: 1px;
+    margin-right: 9px;
+
+    border: 1px solid #cdd4cf;
+
+    border-radius: 5px;
+
+    background: #ffffff;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.checkbox-label input:checked + .custom-checkbox {
+    background: var(--brand-green);
+
+    border-color: var(--brand-green);
+}
+
+
+.checkbox-label input:checked + .custom-checkbox::after {
+    content: "";
+
+    display: block;
+
+    width: 4px;
+    height: 8px;
+
+    margin: 2px auto 0;
+
+    border-right: 1.5px solid white;
+    border-bottom: 1.5px solid white;
+
+    transform: rotate(45deg);
+}
+
+
+.terms-text {
+    font-size: 11px;
+
+    line-height: 1.55;
+
+    color: var(--text-soft);
+}
+
+
+.terms-text a {
+    color: var(--text);
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+
+.terms-text a:hover {
+    color: var(--brand-green);
+}
+
+
+/* =========================================================
+   SUBMIT BUTTON
+   ========================================================= */
+
+.auth-submit {
+    position: relative;
+
+    width: 100%;
+    height: 52px;
+
+    margin-top: 3px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 13px;
+
+    background: var(--brand-green);
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 650;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.auth-submit:hover {
+    background: var(--brand-green-dark);
+
+    box-shadow:
+        0 8px 22px rgba(35, 122, 85, 0.18);
+}
+
+
+.auth-submit:active {
+    transform: scale(0.99);
+}
+
+
+.auth-submit:disabled {
+    cursor: not-allowed;
+
+    opacity: 0.75;
+}
+
+
+/* =========================================================
+   BUTTON ARROW
+   ========================================================= */
+
+.button-arrow {
+    position: absolute;
+
+    right: 17px;
+
+    font-size: 18px;
+
+    transition:
+        transform 0.2s ease;
+}
+
+
+.auth-submit:hover .button-arrow {
+    transform: translateX(3px);
+}
+
+
+/* =========================================================
+   LOADER
+   ========================================================= */
+
+.button-loader {
+    display: none;
+
+    width: 16px;
+    height: 16px;
+
+    border: 2px solid rgba(255, 255, 255, 0.35);
+
+    border-top-color: white;
+
+    border-radius: 50%;
+
+    animation: spin 0.7s linear infinite;
+}
+
+
+.auth-submit.loading .button-text,
+.auth-submit.loading .button-arrow {
+    display: none;
+}
+
+
+.auth-submit.loading .button-loader {
+    display: block;
+}
+
+
+@keyframes spin {
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* =========================================================
+   LOGIN SWITCH
+   ========================================================= */
+
+.auth-switch {
+    margin-top: 25px;
+
+    text-align: center;
+
+    font-size: 11px;
+
+    color: var(--text-muted);
+}
+
+
+.auth-switch a {
+    margin-left: 4px;
+
+    color: var(--brand-green);
+
+    font-weight: 650;
+
+    text-decoration: none;
+}
+
+
+.auth-switch a:hover {
+    color: var(--brand-green-dark);
+}
+
+
+/* =========================================================
+   SUCCESS STATE
+   ========================================================= */
+
+.form-success {
+    padding: 15px;
+
+    border: 1px solid #cfe3d8;
+
+    border-radius: 10px;
+
+    background: var(--brand-green-light);
+
+    color: var(--brand-green-dark);
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .auth-page {
+        grid-template-columns: 1fr;
+    }
+
+
+    .auth-brand-panel {
+        display: none;
+    }
+
+
+    .auth-form-panel {
+        min-height: 100vh;
+
+        padding: 40px 24px;
+    }
+
+
+    .mobile-logo {
+        display: block;
+    }
+
+
+    .auth-form-container {
+        max-width: 460px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 500px) {
+
+    .auth-form-panel {
+        padding: 28px 20px;
+    }
+
+
+    .mobile-logo {
+        margin-bottom: 40px;
+    }
+
+
+    .auth-header h2 {
+        font-size: 28px;
+    }
+
+
+    .auth-header {
+        margin-bottom: 27px;
+    }
+
+
+    .auth-form {
+        gap: 17px;
+    }
+
+
+    .password-requirements {
+        gap: 8px;
+    }
+
+
+    .password-requirements span {
+        font-size: 9px;
+    }
+
+}
+/* =========================================================
+   LOGIN PAGE
+   ========================================================= */
+
+.login-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: -2px;
+    margin-bottom: 24px;
+}
+
+.remember-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 1;
+    color: #59625c;
+    user-select: none;
+}
+
+.remember-label input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.remember-label .custom-checkbox {
+    position: relative;
+    width: 17px;
+    height: 17px;
+    flex: 0 0 17px;
+    border: 1px solid #c8cec9;
+    border-radius: 5px;
+    background: #ffffff;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.remember-label input:checked + .custom-checkbox {
+    background: #315c43;
+    border-color: #315c43;
+}
+
+.remember-label input:checked + .custom-checkbox::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid #ffffff;
+    border-width: 0 1.5px 1.5px 0;
+    transform: rotate(45deg);
+}
+
+.remember-label:hover .custom-checkbox {
+    border-color: #315c43;
+}
+
+.forgot-link {
+    color: #315c43;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.forgot-link:hover {
+    color: #1f402d;
+}
+
+
+/* =========================================================
+   LOGIN RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .login-options {
+        margin-bottom: 22px;
+    }
+
+    .remember-label,
+    .forgot-link {
+        font-size: 12.5px;
+    }
+
+}
+
+/* =========================================================
+   CREATOR LOGIN — OPEN, CENTERED LAYOUT
+   Scoped to login.html so signup and recovery pages retain
+   their existing authentication layout.
+   ========================================================= */
+
+.login-page .auth-page {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.login-page .auth-brand-panel {
+    display: none;
+}
+
+.login-page .auth-form-panel {
+    min-height: 100vh;
+    padding: 64px 24px;
+    background: transparent;
+}
+
+.login-page .auth-form-container {
+    max-width: 440px;
+    animation: loginContentIn 0.5s ease both;
+}
+
+.login-page .mobile-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 48px;
+}
+
+.login-page .auth-header {
+    margin-bottom: 38px;
+    text-align: center;
+}
+
+.login-page .form-eyebrow {
+    margin-bottom: 14px;
+}
+
+.login-page .auth-header h2 {
+    font-family: var(--font-display);
+    font-size: clamp(38px, 5vw, 52px);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+}
+
+.login-page .auth-header p {
+    margin-top: 13px;
+    font-size: 15px;
+}
+
+.login-page .auth-form {
+    gap: 20px;
+}
+
+.login-page .form-group label {
+    font-size: 13px;
+}
+
+.login-page .input-wrapper input {
+    height: 54px;
+}
+
+.login-page .login-options {
+    justify-content: flex-end;
+    margin-top: -4px;
+    margin-bottom: 0;
+}
+
+.login-page .login-message {
+    margin-top: -10px;
+    color: var(--error);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.login-page .login-message:empty {
+    display: none;
+}
+
+.login-page .auth-submit.loading .button-text {
+    display: inline;
+}
+
+.login-page .auth-submit.loading .button-loader {
+    position: absolute;
+    right: 18px;
+    display: block;
+}
+
+.login-page .auth-submit:focus-visible,
+.login-page .forgot-link:focus-visible,
+.login-page .auth-switch a:focus-visible,
+.login-page .password-toggle:focus-visible,
+.login-page .auth-logo:focus-visible {
+    outline: 3px solid rgba(35, 122, 85, 0.28);
+    outline-offset: 3px;
+}
+
+.login-page .auth-switch {
+    margin-top: 26px;
+    font-size: 13px;
+}
+
+@keyframes loginContentIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 700px) {
+    .login-page .auth-form-panel {
+        padding: 48px 24px;
+    }
+
+    .login-page .mobile-logo {
+        margin-bottom: 42px;
+    }
+}
+
+@media (max-width: 500px) {
+    .login-page .auth-form-panel {
+        padding: 32px 20px;
+    }
+
+    .login-page .mobile-logo {
+        margin-bottom: 38px;
+    }
+
+    .login-page .auth-header {
+        margin-bottom: 30px;
+    }
+
+    .login-page .auth-header h2 {
+        font-size: 36px;
+    }
+
+    .login-page .auth-switch {
+        line-height: 1.6;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .login-page .auth-form-container {
+        animation: none;
+    }
+}
+/* =========================================================
+   EMAIL VERIFICATION PAGE
+   ========================================================= */
+
+.verification-content {
+    width: 100%;
+    max-width: 460px;
+    text-align: center;
+}
+
+
+/* ---------------------------------------------------------
+   VERIFICATION ICON
+   --------------------------------------------------------- */
+
+.verification-icon {
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 26px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #dce4de;
+    border-radius: 50%;
+
+    background: #f7faf7;
+
+    box-shadow:
+        0 8px 24px rgba(39, 76, 54, 0.06);
+}
+
+.verification-check {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #315c43;
+    color: #ffffff;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    line-height: 1;
+}
+
+
+/* ---------------------------------------------------------
+   HEADER
+   --------------------------------------------------------- */
+
+.verification-content .form-eyebrow {
+    display: block;
+    margin-bottom: 11px;
+}
+
+.verification-content h2 {
+    margin-bottom: 14px;
+}
+
+.verification-message {
+    max-width: 430px;
+    margin: 0 auto;
+
+    color: #68716b;
+
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+/* ---------------------------------------------------------
+   INFORMATION BOX
+   --------------------------------------------------------- */
+
+.verification-note {
+    width: 100%;
+    box-sizing: border-box;
+
+    margin: 24px auto 28px;
+    padding: 14px 16px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    text-align: left;
+
+    border: 1px solid #e1e7e2;
+    border-radius: 11px;
+
+    background: #fafcfb;
+
+    color: #69736c;
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.verification-dot {
+    width: 7px;
+    height: 7px;
+
+    flex: 0 0 7px;
+
+    border-radius: 50%;
+
+    background: #315c43;
+}
+
+
+/* ---------------------------------------------------------
+   RESEND BUTTON
+   --------------------------------------------------------- */
+
+.verification-resend {
+    width: 100%;
+    margin-top: 0;
+}
+
+
+/* ---------------------------------------------------------
+   RESEND SUCCESS MESSAGE
+   --------------------------------------------------------- */
+
+.resend-message {
+    min-height: 18px;
+
+    margin-top: 11px;
+
+    color: #315c43;
+
+    font-size: 12px;
+    font-weight: 500;
+
+    line-height: 1.5;
+}
+
+
+/* ---------------------------------------------------------
+   LOGIN LINK
+   --------------------------------------------------------- */
+
+.verification-content .auth-switch {
+    margin-top: 21px;
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 700px) {
+
+    .verification-content {
+        max-width: 100%;
+    }
+
+    .verification-icon {
+        width: 60px;
+        height: 60px;
+
+        margin-bottom: 22px;
+    }
+
+    .verification-check {
+        width: 30px;
+        height: 30px;
+
+        font-size: 14px;
+    }
+
+    .verification-message {
+        font-size: 13px;
+        line-height: 1.65;
+    }
+
+    .verification-note {
+        margin-top: 21px;
+        margin-bottom: 24px;
+
+        padding: 13px 14px;
+
+        font-size: 11.5px;
+    }
+
+}
