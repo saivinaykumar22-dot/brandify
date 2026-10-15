@@ -7,8 +7,12 @@ create table if not exists public.profiles (
     phone text not null default '',
     email text not null unique,
     brand_name text not null default '',
+    status text not null default 'Active',
     created_at timestamptz not null default now()
 );
+
+alter table public.profiles
+    add column if not exists status text not null default 'Active';
 
 create table if not exists public.admin_users (
     user_id uuid primary key references public.profiles (user_id) on delete cascade,
@@ -88,6 +92,12 @@ create policy "Creators can update their own profile"
     using ((select auth.uid()) = user_id)
     with check ((select auth.uid()) = user_id);
 
+drop policy if exists "Admins can update creator status" on public.profiles;
+create policy "Admins can update creator status"
+    on public.profiles for update to authenticated
+    using ((select public.is_brandify_admin()))
+    with check ((select public.is_brandify_admin()));
+
 drop policy if exists "Admins can read their own admin role" on public.admin_users;
 create policy "Admins can read their own admin role"
     on public.admin_users for select to authenticated
@@ -116,6 +126,7 @@ create policy "Creators and admins can delete records"
 
 grant select on public.profiles to authenticated;
 grant update (full_name, phone, brand_name) on public.profiles to authenticated;
+grant update (status) on public.profiles to authenticated;
 grant select on public.admin_users to authenticated;
 grant select, insert, update, delete on public.brandify_records to authenticated;
 
