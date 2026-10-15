@@ -1165,12 +1165,24 @@ a {
 
         font-size:
             clamp(
-                42px,
-                12vw,
-                56px
+                30px,
+                10vw,
+                46px
             );
 
         line-height: 1.01;
+
+        overflow-wrap: anywhere;
+    }
+
+
+    .hero h1 span {
+
+        display: block;
+
+        max-width: 100%;
+
+        overflow-wrap: anywhere;
     }
 
 
@@ -1188,6 +1200,10 @@ a {
 
         width: 100%;
 
+        max-width: 100%;
+
+        min-width: 0;
+
         flex-direction: column;
 
         margin-top: 27px;
@@ -1198,6 +1214,12 @@ a {
     .secondary-button {
 
         width: 100%;
+
+        max-width: 100%;
+
+        min-width: 0;
+
+        box-sizing: border-box;
 
         justify-content: center;
     }
