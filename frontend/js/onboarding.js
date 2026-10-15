@@ -242,8 +242,7 @@ document.addEventListener("DOMContentLoaded", function () {
             placeholder: "Enter brand name",
             example: "e.g. VYRA",
             storageKey: "brandifyBrandName",
-            minLength: 2,
-            optional: true
+            minLength: 2
         },
 
         {
@@ -257,7 +256,6 @@ document.addEventListener("DOMContentLoaded", function () {
             type: "radio",
             name: "brandCategory",
             storageKey: "brandifyCategory",
-            optional: true,
             options: categories.map(function (item) {
                 return item[0];
             })
@@ -271,7 +269,7 @@ document.addEventListener("DOMContentLoaded", function () {
             question:
                 "Which products do you want to offer?",
             description:
-                "Choose products from your selected categories, or browse the full catalog if you skip categories.",
+                "Choose one or more products from your selected categories.",
             type: "radio",
             name: "brandProduct",
             storageKey: "brandifyProduct",
@@ -297,18 +295,21 @@ document.addEventListener("DOMContentLoaded", function () {
     description: "",
     type: "pricing",
     name: "productPricing",
-    storageKey: "brandifyProductPricing"
+    storageKey: "brandifyProductPricing",
+    canSkip: true
 },
 
         {
     number: 6,
     title: "Brand Identity",
-    subtitle: "Build a visual identity that represents your brand.",
+    subtitle: "Optional — you can complete your brand identity later.",
     question: "",
     description: "",
     type: "brandIdentity",
     name: "brandIdentity",
-    storageKey: "brandifyBrandIdentity"
+    storageKey: "brandifyBrandIdentity",
+    optional: true,
+    canSkip: true
 },
         {
     number: 7,
@@ -319,7 +320,8 @@ document.addEventListener("DOMContentLoaded", function () {
     type: "storeSetup",
     name: "storeSetup",
     storageKey: "brandifyStoreSetup",
-    optional: true
+    optional: true,
+    canSkip: true
 },
 
         {
@@ -330,7 +332,8 @@ document.addEventListener("DOMContentLoaded", function () {
     description: "Enter your basic bank details to receive your earnings.",
     type: "payout",
     name: "payoutDetails",
-    storageKey: "brandifyPayoutDetails"
+    storageKey: "brandifyPayoutDetails",
+    canSkip: true
 },
 
         {
@@ -596,10 +599,7 @@ document.addEventListener("DOMContentLoaded", function () {
        ===================================================== */
 
     function renderProductOptions(step) {
-        const savedCategories = getSavedArray("brandifyCategory");
-        const selectedCategories = savedCategories.length
-            ? savedCategories
-            : categories.map(function (category) { return category[0]; });
+        const selectedCategories = getSavedArray("brandifyCategory");
 
         const products = [];
 
@@ -726,10 +726,7 @@ function getStorageArray(key) {
 
 function getSelectedProductsForStep4() {
 
-    const savedCategories = getStorageArray("brandifyCategory");
-    const selectedCategories = savedCategories.length
-        ? savedCategories
-        : categories.map(function (category) { return category[0]; });
+    const selectedCategories = getStorageArray("brandifyCategory");
 
     const selectedProductNames =
         getStorageArray("brandifyProduct");
@@ -830,10 +827,7 @@ function getSelectedProductsForStep4() {
 
 function getSelectedProductsForPricing() {
 
-    const savedCategories = getSavedArray("brandifyCategory");
-    const selectedCategories = savedCategories.length
-        ? savedCategories
-        : categories.map(function (category) { return category[0]; });
+    const selectedCategories = getSavedArray("brandifyCategory");
 
     const selectedProductNames =
         getSavedArray("brandifyProduct");
@@ -2760,8 +2754,7 @@ if (step.type === "brandIdentity") {
 
                 ${
                     stepNumber < steps.length &&
-                    (step.optional || stepNumber !== 2) &&
-                    stepNumber !== 3 && stepNumber !== 4
+                    step.canSkip
                         ? `
                             <button
                                 type="button"
