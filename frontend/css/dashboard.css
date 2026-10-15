@@ -108,6 +108,8 @@
 .request-item-heading { display:flex; align-items:center; justify-content:space-between; color:#344940; font-size:11px; }
 .request-item-customization { color:#7d8b84; font-size:10px; }
 .request-item-customization strong { color:#53635d; }
+.request-item-stock { margin:0; color:#637169; font-size:10px; }
+.request-item-stock.is-insufficient { color:#b53838; font-weight:600; }
 .request-summary { position:sticky; top:88px; }
 .request-summary-list { display:grid; gap:12px; margin:0; }
 .request-summary-list > div { display:grid; gap:4px; padding-bottom:10px; border-bottom:1px solid #edf1ee; }
