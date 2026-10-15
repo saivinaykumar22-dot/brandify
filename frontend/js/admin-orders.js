@@ -12,6 +12,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function requests() { return W.list("brandifyOrderRequests"); }
     function esc(value) { return D.escape(value == null ? "" : value); }
+    function reservedByOtherRequests(productId, requestId) {
+        const pendingRequests = requests().filter(function (request) { return request && request.requestId !== requestId && ["Awaiting Approval", "Resubmitted"].includes(request.status); })
+            .reduce(function (total, request) {
+                return total + (request.items || []).reduce(function (sum, item) {
+                    return sum + ((item.masterProductId || item.productId) === productId ? Math.max(0, Number(item.quantity) || 0) : 0);
+                }, 0);
+            }, 0);
+        const processingOrders = D.orders().filter(function (order) { return order && order.inventoryReservation === "active" && ["Processing", "Shipped", "Out for Delivery"].includes(order.status); })
+            .reduce(function (total, order) {
+                return total + (order.items || []).reduce(function (sum, item) {
+                    return sum + ((item.masterProductId || item.productId) === productId ? Math.max(0, Number(item.quantity) || 0) : 0);
+                }, 0);
+            }, 0);
+        return pendingRequests + processingOrders;
+    }
     function labelArtwork(item) {
         if (!item.labelArtwork) return "";
         return `<a class="request-label-artwork" href="${esc(item.labelArtwork)}" download="${esc(item.labelArtworkName || "label-artwork")}"><img src="${esc(item.labelArtwork)}" alt="Uploaded label artwork"><span>View label artwork${item.labelArtworkName ? ` · ${esc(item.labelArtworkName)}` : ""}</span></a>`;
@@ -91,7 +106,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         for (const [productId, quantity] of quantities.entries()) {
             const product = products.find(function (entry) { return entry.id === productId; });
-            if (product.stock != null && Number(product.stock) < quantity) { approvalError(`${product.name} has insufficient stock for this request.`); return; }
+            if (product.stock != null) {
+                const available = Math.max(0, Number(product.stock) - reservedByOtherRequests(productId, requestId));
+                if (available < quantity) { approvalError(`${product.name} has ${available} available after other pending requests; this request needs ${quantity}.`); return; }
+            }
         }
         const now = new Date().toISOString();
         const orderId = W.generateOrderId();
@@ -104,19 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const totalQuantity = items.reduce(function (sum, item) { return sum + Number(item.quantity || 0); }, 0);
         const amount = items.reduce(function (sum, item) { return sum + Number(item.fulfillmentCost || 0) * Number(item.quantity || 0); }, 0);
         const creatorRevenue = items.reduce(function (sum, item) { return sum + Number(item.sellingPrice || 0) * Number(item.quantity || 0); }, 0);
-        const nextOrder = { id: orderId, orderId: orderId, requestId: requestId, creatorId: request.creatorId, creatorName: request.creatorName, creatorEmail: request.creatorEmail || "", brandName: request.brandName || "", customer: request.customer, customerName: request.customer.name, customerPhone: request.customer.phone, customerEmail: request.customer.email || "", shippingAddress: request.shippingAddress, billingAddress: request.billingAddress, items: items, productName: items.map(function (item) { return `${item.productName} × ${item.quantity}`; }).join(", "), product: items.map(function (item) { return `${item.productName} × ${item.quantity}`; }).join(", "), quantity: totalQuantity, amount: amount, total: amount, creatorRevenue: creatorRevenue, customerPaymentStatus: request.customerPaymentStatus, creatorNotes: request.creatorNotes, orderSource: "manual", salesChannel: "Manual", status: "Processing", statusHistory: [{ status: "Approved", timestamp: now, changedAt: now, changedBy: "admin" }, { status: "Processing", timestamp: now, changedAt: now, changedBy: "admin" }], approvedAt: now, approvedBy: "admin", createdAt: now, updatedAt: now };
-        for (const [productId, quantity] of quantities.entries()) {
-            const product = products.find(function (entry) { return entry.id === productId; });
-            if (product.stock != null) product.stock = Math.max(0, Number(product.stock) - quantity);
-        }
-        if (products.length) {
-            try {
-                await D.saveCatalog(products);
-            } catch (error) {
-                approvalError(error.message || "Could not sync inventory. Please try again.");
-                return;
-            }
-        }
+        const nextOrder = { id: orderId, orderId: orderId, requestId: requestId, creatorId: request.creatorId, creatorName: request.creatorName, creatorEmail: request.creatorEmail || "", brandName: request.brandName || "", customer: request.customer, customerName: request.customer.name, customerPhone: request.customer.phone, customerEmail: request.customer.email || "", shippingAddress: request.shippingAddress, billingAddress: request.billingAddress, items: items, productName: items.map(function (item) { return `${item.productName} × ${item.quantity}`; }).join(", "), product: items.map(function (item) { return `${item.productName} × ${item.quantity}`; }).join(", "), quantity: totalQuantity, amount: amount, total: amount, creatorRevenue: creatorRevenue, customerPaymentStatus: request.customerPaymentStatus, creatorNotes: request.creatorNotes, orderSource: "manual", salesChannel: "Manual", status: "Processing", inventoryReservation: "active", statusHistory: [{ status: "Approved", timestamp: now, changedAt: now, changedBy: "admin" }, { status: "Processing", timestamp: now, changedAt: now, changedBy: "admin" }], approvedAt: now, approvedBy: "admin", createdAt: now, updatedAt: now };
         allOrders.push(nextOrder);
         W.write("brandifyOrders", allOrders);
         request.status = "Approved";
