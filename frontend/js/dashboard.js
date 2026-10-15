@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const nav = document.getElementById("dashboardNavigation");
     const sidebar = document.getElementById("dashboardSidebar");
     const overlay = document.getElementById("dashboardOverlay");
-    const titles = { dashboard: "Dashboard", catalog: "Product Catalog", products: "My Products", orders: "Orders", customers: "Customers", analytics: "Analytics", brand: "My Brand", store: "Store", channels: "Sales Channels", payouts: "Payouts", settings: "Settings", help: "Help & Support", customize: "Customize Product", pricing: "Set Price", review: "Review Product" };
+    const titles = { dashboard: "Dashboard", catalog: "Product Catalog", products: "My Products", orders: "Orders", customers: "Customers", analytics: "Analytics", brand: "My Brand", identity: "Brand Identity", store: "Store", channels: "Sales Channels", payouts: "Payouts", settings: "Settings", help: "Help & Support", customize: "Customize Product", pricing: "Set Price", review: "Review Product" };
     let currentView = "dashboard";
     let activeOrderFilter = "All";
     let productQuery = "";
