@@ -38,10 +38,17 @@ document.addEventListener(
 
         const accountDropdown =
             document.getElementById("accountDropdown");
+        const startBuildingLinks = document.querySelectorAll("[data-start-building]");
 
         function updateAccountHeader() {
             const isLoggedIn =
                 localStorage.getItem("brandifyLoggedIn") === "true";
+            const launchReady = localStorage.getItem("brandifyLaunchReady") === "true";
+            startBuildingLinks.forEach(function (link) {
+                link.href = isLoggedIn
+                    ? (launchReady ? "frontend/dashboard.html" : "frontend/onboarding.html")
+                    : "frontend/signup.html";
+            });
 
             if (publicNavActions) {
                 publicNavActions.hidden = isLoggedIn;
@@ -124,7 +131,7 @@ document.addEventListener(
         }
 
         window.addEventListener("storage", function (event) {
-            if (event.key === "brandifyLoggedIn" || event.key === "brandifyAccount") {
+            if (event.key === "brandifyLoggedIn" || event.key === "brandifyAccount" || event.key === "brandifyLaunchReady") {
                 updateAccountHeader();
             }
         });
