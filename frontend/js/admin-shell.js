@@ -18,6 +18,7 @@
         const selected = links.find(function (item) { return item[0] === activePage; });
         const root = document.querySelector("[data-admin-shell]");
         if (!root) return;
+        const pageNodes = Array.from(root.childNodes);
 
         root.innerHTML = `<aside class="admin-sidebar" aria-label="Admin navigation">
             <a class="admin-brand" href="admin-dashboard.html" aria-label="Brandify admin home"><span class="admin-brand-mark" aria-hidden="true"><i></i></span><span class="admin-brand-word">Brandify<span>.</span></span></a>
@@ -25,7 +26,9 @@
             <nav>${links.map(function (item) { return `<a class="${activePage === item[0] ? "active" : ""}" href="${item[0]}"><span class="admin-nav-icon" aria-hidden="true">${item[2]}</span>${item[1]}</a>`; }).join("")}</nav>
             <div class="admin-sidebar-bottom"><button type="button" class="admin-logout" id="adminLogout"><span aria-hidden="true">↪</span>Logout</button><div class="admin-sidebar-user"><span class="admin-avatar">SA</span><span>Super Admin<small>Administrator</small></span></div></div>
         </aside>
-        <div class="admin-main"><header class="admin-topbar"><button class="admin-menu-toggle" id="adminMenuToggle" aria-label="Open menu">☰</button><div class="admin-topbar-page"><span>Workspace</span><i aria-hidden="true">/</i><strong>${selected ? selected[1] : "Admin"}</strong></div><div class="admin-topbar-actions"><div class="admin-notification-menu"><button type="button" class="admin-notification-trigger" id="adminNotificationButton" aria-label="Admin notifications" aria-expanded="false">🔔<span id="adminNotificationCount" hidden></span></button><div class="admin-notification-dropdown" id="adminNotificationDropdown" hidden></div></div><div class="admin-profile-menu"><button class="admin-profile-trigger" id="adminProfileTrigger" type="button" aria-haspopup="true" aria-expanded="false"><span class="admin-online-dot"></span><span>Super Admin</span><span class="admin-caret" aria-hidden="true"></span><b>SA</b></button><div class="admin-profile-dropdown" id="adminProfileDropdown" hidden><a href="admin-settings.html">Settings</a><button type="button" id="adminProfileLogout">Logout</button></div></div></div></header><main class="admin-content">${root.innerHTML}</main></div>`;
+        <div class="admin-main"><header class="admin-topbar"><button class="admin-menu-toggle" id="adminMenuToggle" aria-label="Open menu">☰</button><div class="admin-topbar-page"><span>Workspace</span><i aria-hidden="true">/</i><strong>${selected ? selected[1] : "Admin"}</strong></div><div class="admin-topbar-actions"><div class="admin-notification-menu"><button type="button" class="admin-notification-trigger" id="adminNotificationButton" aria-label="Admin notifications" aria-expanded="false">🔔<span id="adminNotificationCount" hidden></span></button><div class="admin-notification-dropdown" id="adminNotificationDropdown" hidden></div></div><div class="admin-profile-menu"><button class="admin-profile-trigger" id="adminProfileTrigger" type="button" aria-haspopup="true" aria-expanded="false"><span class="admin-online-dot"></span><span>Super Admin</span><span class="admin-caret" aria-hidden="true"></span><b>SA</b></button><div class="admin-profile-dropdown" id="adminProfileDropdown" hidden><a href="admin-settings.html">Settings</a><button type="button" id="adminProfileLogout">Logout</button></div></div></div></header><main class="admin-content"></main></div>`;
+        const adminContent = root.querySelector(".admin-content");
+        pageNodes.forEach(function (node) { adminContent.appendChild(node); });
         root.removeAttribute("data-admin-shell");
         function confirmLogout() {
             const backdrop = document.createElement("div");
