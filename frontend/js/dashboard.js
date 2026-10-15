@@ -304,7 +304,7 @@ document.addEventListener("DOMContentLoaded", function () {
             { id: "product", title: "Select Your Product", complete: hasProduct, detail: hasProduct ? `${myProducts.length} product${myProducts.length === 1 ? "" : "s"} in My Products` : "Choose a product from the catalog for your brand.", view: "catalog", action: "Choose Product" },
             { id: "customize", title: "Customize Product", complete: hasCustomization, detail: !hasProduct ? "Complete Select Your Product first." : hasCustomization ? "Customization options saved." : "Choose the custom options for your product.", view: "customize", action: "Customize", disabled: !hasProduct },
             { id: "pricing", title: "Set Your Price", complete: hasPrice, detail: !hasProduct ? "Complete Select Your Product first." : hasPrice ? "A selling price is set." : "Set a selling price for your product.", view: "pricing", action: "Set Price", disabled: !hasProduct },
-            { id: "identity", title: "Brand Identity", complete: true, detail: hasIdentity ? "Your brand colors and style are saved." : "Completed by default. You can add your brand colors and style later.", view: "identity", action: "Set Identity" },
+            { id: "identity", title: "Brand Identity", complete: true, detail: hasIdentity ? "Your brand colors and style are saved." : "Completed by default. You can add your brand colors and style later.", view: "identity", action: "Set Identity", alwaysAction: true },
             { id: "channels", title: "Sales Channels", complete: hasChannels, detail: hasChannels ? "Your Brandify storefront is configured." : "Set up your Brandify storefront to prepare a sales channel.", view: "store", action: "Set Up Store" },
             { id: "payout", title: "Payout Setup", complete: hasPayout, detail: hasPayout ? `Payout account added · •••• ${String(payout.accountNumber).slice(-4)}` : "Add payout details to receive earnings.", view: "payouts", action: "Add Payout Details" }
         ];
@@ -353,8 +353,8 @@ document.addEventListener("DOMContentLoaded", function () {
             : "";
         const checklist = state.tasks.map(function (task) {
             const status = task.complete ? `<span class="setup-task-status complete">Completed</span>` : `<span class="setup-task-status">Pending</span>`;
-            const action = !task.complete
-                ? `<button class="text-action setup-task-action" data-setup-view="${task.view}" data-setup-task="${task.id}" ${task.disabled ? "disabled" : ""}>${task.action} →</button>`
+            const action = !task.complete || task.alwaysAction
+                ? `<button type="button" class="text-action setup-task-action" data-setup-view="${task.view}" data-setup-task="${task.id}" ${task.disabled ? "disabled" : ""}>${task.action} →</button>`
                 : "";
             return `<article class="setup-task ${task.complete ? "is-complete" : "is-pending"}"><span class="setup-task-check" aria-hidden="true">${task.complete ? "✓" : "○"}</span><div class="setup-task-copy"><div class="setup-task-title-row"><h3>${escapeHTML(task.title)}</h3>${status}</div><p>${escapeHTML(task.detail)}</p>${action}</div></article>`;
         }).join("");
@@ -467,6 +467,25 @@ document.addEventListener("DOMContentLoaded", function () {
         const catalog = window.BrandifyCatalog ? window.BrandifyCatalog.getAll() : (window.BRANDIFY_PRODUCTS || []);
         return catalog.find(function (item) { return item.id === product.masterProductId || item.id === product.id; }) || product;
     }
+    function availableStock(productId, excludeRequestId) {
+        const master = requestProductDetails({ id: productId, masterProductId: productId });
+        if (master.stock == null || !Number.isFinite(Number(master.stock))) return null;
+        const pendingReserved = (window.BrandifyOrderWorkflow ? window.BrandifyOrderWorkflow.list("brandifyOrderRequests") : read("brandifyOrderRequests", []))
+            .filter(function (request) { return request && request.requestId !== excludeRequestId && ["Awaiting Approval", "Resubmitted"].includes(request.status); })
+            .reduce(function (total, request) {
+                return total + (request.items || []).reduce(function (sum, item) {
+                    return sum + ((item.masterProductId || item.productId) === productId ? Math.max(0, Number(item.quantity) || 0) : 0);
+                }, 0);
+            }, 0);
+        const processingReserved = (window.BrandifyOrderWorkflow ? window.BrandifyOrderWorkflow.list("brandifyOrders") : read("brandifyOrders", []))
+            .filter(function (order) { return order && order.inventoryReservation === "active" && ["Processing", "Shipped", "Out for Delivery"].includes(order.status); })
+            .reduce(function (total, order) {
+                return total + (order.items || []).reduce(function (sum, item) {
+                    return sum + ((item.masterProductId || item.productId) === productId ? Math.max(0, Number(item.quantity) || 0) : 0);
+                }, 0);
+            }, 0);
+        return Math.max(0, Number(master.stock) - pendingReserved - processingReserved);
+    }
     function orderItemMarkup(product, index, selectedItem) {
         selectedItem = selectedItem || {};
         const options = requestableProducts();
@@ -480,7 +499,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return `<label>${key === "sizes" ? "Size" : "Color"}<select class="form-control" data-request-variant="${field}" ${values.length ? "required" : ""}><option value="">Select ${key === "sizes" ? "size" : "color"}</option>${values.map(function (value) { return `<option ${selectedItem.selectedVariants && selectedItem.selectedVariants[field] === value ? "selected" : ""}>${escapeHTML(value)}</option>`; }).join("")}</select></label>`;
         }).join("");
         const customization = Array.isArray(selected && selected.customization) ? selected.customization.join(", ") : "No customization saved";
-        return `<article class="request-item-row" data-request-item><div class="request-item-heading"><strong>Product ${index + 1}</strong>${index ? `<button class="text-action" type="button" data-remove-request-item>Remove</button>` : ""}</div><label>My Product<select class="form-control" data-request-product required><option value="">Select a ready product</option>${options.map(function (item) { return `<option value="${escapeHTML(item.id)}" ${selected && item.id === selected.id ? "selected" : ""}>${escapeHTML(item.name)}</option>`; }).join("")}</select></label><div class="request-variant-grid">${variantMarkup}</div><label>Quantity<input class="form-control" data-request-quantity type="number" min="1" step="1" value="${escapeHTML(selectedItem.quantity || 1)}" required></label><p class="request-item-customization"><strong>Saved customization:</strong> ${escapeHTML(customization)}</p>${selected && selected.basePrice != null ? `<p class="request-item-customization"><strong>Fulfillment cost:</strong> ${money(selected.basePrice)} per unit</p>` : ""}<span class="form-error" data-item-error role="alert"></span></article>`;
+        return `<article class="request-item-row" data-request-item><div class="request-item-heading"><strong>Product ${index + 1}</strong>${index ? `<button class="text-action" type="button" data-remove-request-item>Remove</button>` : ""}</div><label>My Product<select class="form-control" data-request-product required><option value="">Select a ready product</option>${options.map(function (item) { return `<option value="${escapeHTML(item.id)}" ${selected && item.id === selected.id ? "selected" : ""}>${escapeHTML(item.name)}</option>`; }).join("")}</select></label><div class="request-variant-grid">${variantMarkup}</div><label>Quantity<input class="form-control" data-request-quantity type="number" min="1" step="1" value="${escapeHTML(selectedItem.quantity || 1)}" required></label><p class="request-item-stock" data-stock-availability aria-live="polite"></p><p class="request-item-customization"><strong>Saved customization:</strong> ${escapeHTML(customization)}</p>${selected && selected.basePrice != null ? `<p class="request-item-customization"><strong>Fulfillment cost:</strong> ${money(selected.basePrice)} per unit</p>` : ""}<span class="form-error" data-item-error role="alert"></span></article>`;
     }
     function existingRequest(requestId) { return creatorRequests().find(function (request) { return request.requestId === requestId; }) || null; }
     function createRequestView() {
@@ -517,7 +536,25 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!summary) return;
         const data = captureRequestForm();
         if (!data) return;
-        const productText = data.items.length ? data.items.map(function (item) { const cost = item.fulfillmentCost == null ? "" : ` · ${money(item.fulfillmentCost * item.quantity)} fulfillment`; return `<li>${escapeHTML(item.productName)} × ${item.quantity}${Object.keys(item.selectedVariants).length ? ` · ${escapeHTML(Object.entries(item.selectedVariants).map(function (entry) { return `${entry[0]}: ${entry[1]}`; }).join(", "))}` : ""}${cost}<small>${escapeHTML(item.customization.join(", ") || "No saved customization")}</small></li>`; }).join("") : "<li>No products selected</li>";
+        const itemRows = Array.from(document.querySelectorAll("#requestItems [data-request-item]"));
+        itemRows.forEach(function (row) {
+            const selectedId = row.querySelector("[data-request-product]").value;
+            const selectedProduct = requestableProducts().find(function (product) { return product.id === selectedId; });
+            const master = selectedProduct ? requestProductDetails(selectedProduct) : null;
+            const stockNote = row.querySelector("[data-stock-availability]");
+            if (!stockNote) return;
+            if (!selectedProduct || !master || master.stock == null) { stockNote.textContent = selectedProduct ? "Available stock is not tracked for this product." : "Select a product to see available stock."; stockNote.classList.remove("is-insufficient"); return; }
+            const productId = selectedProduct.masterProductId || selectedProduct.id;
+            const otherRowQuantity = itemRows.reduce(function (sum, otherRow) {
+                if (otherRow === row || otherRow.querySelector("[data-request-product]").value !== selectedId) return sum;
+                return sum + Math.max(0, Number(otherRow.querySelector("[data-request-quantity]").value) || 0);
+            }, 0);
+            const available = Math.max(0, availableStock(productId, editingRequestId) - otherRowQuantity);
+            const requested = Math.max(0, Number(row.querySelector("[data-request-quantity]").value) || 0);
+            stockNote.textContent = requested > available ? `Available stock: ${available}. Reduce the quantity to continue.` : `Available stock: ${available} units`;
+            stockNote.classList.toggle("is-insufficient", requested > available);
+        });
+        const productText = data.items.length ? data.items.map(function (item) { const cost = item.fulfillmentCost == null ? "" : ` · ${money(item.fulfillmentCost * item.quantity)} fulfillment`; const stock = availableStock(item.masterProductId || item.productId, editingRequestId); return `<li>${escapeHTML(item.productName)} × ${item.quantity}${Object.keys(item.selectedVariants).length ? ` · ${escapeHTML(Object.entries(item.selectedVariants).map(function (entry) { return `${entry[0]}: ${entry[1]}`; }).join(", "))}` : ""}${cost}<small>${escapeHTML(item.customization.join(", ") || "No saved customization")}${stock == null ? " · Stock not tracked" : ` · ${stock} available`}</small></li>`; }).join("") : "<li>No products selected</li>";
         const knownCosts = data.items.filter(function (item) { return item.fulfillmentCost != null; });
         const fulfillmentTotal = knownCosts.length ? money(knownCosts.reduce(function (total, item) { return total + item.fulfillmentCost * item.quantity; }, 0)) : "Not recorded";
         summary.innerHTML = `<dl class="request-summary-list"><div><dt>Customer</dt><dd>${escapeHTML(data.customer.name || "Not entered")}<small>${escapeHTML(data.customer.phone || "Phone not entered")}${data.customer.email ? ` · ${escapeHTML(data.customer.email)}` : ""}</small></dd></div><div><dt>Products</dt><dd><ul>${productText}</ul></dd></div><div><dt>Fulfillment cost</dt><dd>${fulfillmentTotal}</dd></div><div><dt>Shipping address</dt><dd>${addressMarkup(data.shippingAddress)}</dd></div>${data.billingAddress.sameAsShipping ? "" : `<div><dt>Billing address</dt><dd>${addressMarkup(data.billingAddress.address)}</dd></div>`}<div><dt>Payment reference</dt><dd>${escapeHTML(data.customerPaymentStatus)}</dd></div><div><dt>Creator notes</dt><dd>${escapeHTML(data.creatorNotes || "None")}</dd></div></dl>`;
@@ -565,6 +602,21 @@ document.addEventListener("DOMContentLoaded", function () {
             else if ((requiredVariants.sizes || []).length && !row.querySelector('[data-request-variant="size"]').value) rowError = "Select a size.";
             else if ((requiredVariants.colors || []).length && !row.querySelector('[data-request-variant="color"]').value) rowError = "Select a color.";
             if (rowError) { row.querySelector("[data-item-error]").textContent = rowError; if (!message) message = rowError; }
+        });
+        const requestedByProduct = new Map();
+        data.items.forEach(function (item) {
+            const productId = item.masterProductId || item.productId;
+            requestedByProduct.set(productId, (requestedByProduct.get(productId) || 0) + Number(item.quantity || 0));
+        });
+        requestedByProduct.forEach(function (quantity, productId) {
+            const available = availableStock(productId, editingRequestId);
+            if (available == null || quantity <= available) return;
+            const affected = rows.filter(function (row) {
+                const selected = requestableProducts().find(function (product) { return product.id === row.querySelector("[data-request-product]").value; });
+                return selected && (selected.masterProductId || selected.id) === productId;
+            });
+            affected.forEach(function (row) { row.querySelector("[data-item-error]").textContent = `Only ${available} units are available across pending requests.`; });
+            message = message || `Insufficient stock. Only ${available} units are available for ${affected[0] && affected[0].querySelector("[data-request-product]").selectedOptions[0].text || "this product"}.`;
         });
         if (!data.customer.name) message = message || "Enter the customer's name.";
         if (!/^\+?[0-9 ()-]{7,20}$/.test(data.customer.phone)) message = message || "Enter a valid customer phone number.";
