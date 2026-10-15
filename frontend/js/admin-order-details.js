@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
         backdrop.querySelector("[data-close-status]").addEventListener("click", close);
         backdrop.addEventListener("click", function (event) { if (event.target === backdrop) close(); });
         document.addEventListener("keydown", escapeModal);
-        form.addEventListener("submit", function (event) {
+        form.addEventListener("submit", async function (event) {
             event.preventDefault();
             if (confirmButton.disabled) return;
             confirmButton.disabled = true;
@@ -56,6 +56,31 @@ document.addEventListener("DOMContentLoaded", function () {
                 trackingNumber = form.elements.trackingNumber.value.trim();
                 shippingDate = form.elements.shippingDate.value;
                 Object.assign(updated, { courierName: courierName, trackingNumber: trackingNumber, shippingDate: shippingDate });
+            }
+            if (nextStatus === "Delivered" && updated.inventoryReservation === "active") {
+                const products = D.catalog();
+                const quantities = new Map();
+                (updated.items || []).forEach(function (item) {
+                    const productId = item.masterProductId || item.productId;
+                    quantities.set(productId, (quantities.get(productId) || 0) + Math.max(0, Number(item.quantity) || 0));
+                });
+                for (const [productId, quantity] of quantities.entries()) {
+                    const product = products.find(function (entry) { return entry.id === productId; });
+                    if (!product) { confirmButton.disabled = false; D.toast(`${(updated.items || []).find(function (item) { return (item.masterProductId || item.productId) === productId; }).productName || "A product"} is missing from the catalog. Inventory was not changed.`); return; }
+                    if (product.stock != null && Number(product.stock) < quantity) { confirmButton.disabled = false; D.toast(`${product.name} has only ${Number(product.stock)} units on hand; ${quantity} are needed to fulfill this order.`); return; }
+                }
+                quantities.forEach(function (quantity, productId) {
+                    const product = products.find(function (entry) { return entry.id === productId; });
+                    if (product && product.stock != null) product.stock = Number(product.stock) - quantity;
+                });
+                try {
+                    await D.saveCatalog(products);
+                } catch (error) {
+                    confirmButton.disabled = false;
+                    D.toast(error.message || "Could not sync inventory. Please try again.");
+                    return;
+                }
+                updated.inventoryReservation = "fulfilled";
             }
             updated.statusHistory.push({ status: nextStatus, timestamp: now, changedAt: now, changedBy: "admin", courierName: courierName, trackingNumber: trackingNumber, shippingDate: shippingDate });
             orders[index] = updated;
