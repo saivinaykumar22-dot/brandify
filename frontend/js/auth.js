@@ -294,7 +294,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     const result = await window.BrandifyBackend.signUp({ fullName: fullName, phone: phone, email: email, password: password });
                     if (result.error) throw result.error;
                     if (!result.data.session) {
-                        alert("Your account was created. Confirm your email, then sign in to continue.");
+                        alert("Your account was created, but Supabase did not start a login session. Turn off email confirmation in your Supabase Auth settings, then sign in.");
                         window.location.href = "login.html";
                         return;
                     }
