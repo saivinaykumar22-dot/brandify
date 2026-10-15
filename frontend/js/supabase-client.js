@@ -124,7 +124,7 @@
         localStorage.setItem("brandifyLoggedIn", adminUser ? "false" : "true");
         localStorage.setItem("brandifyAdminLoggedIn", adminUser ? "true" : "false");
 
-        const profileResult = await client.from("profiles").select("user_id,creator_key,full_name,phone,email,brand_name,created_at");
+        const profileResult = await client.from("profiles").select("user_id,creator_key,full_name,phone,email,brand_name,status,created_at");
         if (profileResult.error) throw profileResult.error;
         profileCache = profileResult.data || [];
 
@@ -135,6 +135,7 @@
             phone: currentProfile && currentProfile.phone || user.user_metadata && user.user_metadata.phone || "",
             email: user.email || ""
         };
+        localStorage.setItem("brandifyCreatorStatus", currentProfile && currentProfile.status || "Active");
         localStorage.setItem("brandifyAccount", JSON.stringify(account));
         localStorage.setItem("brandifyCreatorId", currentProfile && currentProfile.creator_key || creatorKey(user.email));
 
@@ -181,7 +182,7 @@
                     email: profile.email,
                     brandName: profile.brand_name || saved.brandName || "",
                     createdAt: profile.created_at,
-                    status: saved.status || "Active",
+                    status: profile.status || saved.status || "Active",
                     orders: byType.order.filter(function (order) { return order && order.creatorId === profile.creator_key; })
                 });
             });
@@ -283,6 +284,22 @@
             if (!Object.keys(allowed).length) return;
             const result = await client.from("profiles").update(allowed).eq("user_id", user.id);
             if (result.error) throw result.error;
+        },
+        updateCreatorStatus: async function (creatorKey, status) {
+            if (!client || !adminUser) throw new Error("Only an admin can change creator status.");
+            if (!["Active", "Inactive"].includes(status)) throw new Error("Choose a valid creator status.");
+            const result = await client.from("profiles").update({ status: status }).eq("creator_key", creatorKey);
+            if (result.error) throw result.error;
+            profileCache = profileCache.map(function (profile) {
+                return profile.creator_key === creatorKey ? Object.assign({}, profile, { status: status }) : profile;
+            });
+            const creators = (function () {
+                try { const value = JSON.parse(localStorage.getItem("brandifyCreators") || "[]"); return Array.isArray(value) ? value : []; }
+                catch (error) { return []; }
+            })();
+            writeLocal("brandifyCreators", creators.map(function (creator) {
+                return creator.id === creatorKey ? Object.assign({}, creator, { status: status }) : creator;
+            }));
         },
         persistRecords: persistRecords,
         persistCatalog: persistCatalog,
