@@ -24,4 +24,18 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener("brandify-storage-update", function () { render(); });
     window.addEventListener("brandify-backend-ready", render);
     render();
+    async function renderPaymentStats() {
+        const backend = window.BrandifyBackend;
+        if (!backend || !backend.isConfigured() || !backend.isAdmin()) return;
+        const result = await backend.client.from("fulfillment_payments").select("payment_status,amount");
+        if (result.error) return;
+        const rows = result.data || [];
+        const extra = [["Paid orders", rows.filter(x => x.payment_status === "Paid").length, "Verified payments"], ["Pending payments", rows.filter(x => x.payment_status === "Pending").length, "Awaiting creator payment"], ["Failed payments", rows.filter(x => x.payment_status === "Failed").length, "Retry available"], ["Payment amount received", D.money(rows.filter(x => x.payment_status === "Paid").reduce((sum, x) => sum + Number(x.amount || 0), 0) / 100), "INR · verified captured payments"]];
+        const container = document.getElementById("adminStats");
+        container.querySelectorAll("[data-payment-stat]").forEach(node => node.remove());
+        container.insertAdjacentHTML("beforeend", extra.map(item => `<article class="admin-stat" data-payment-stat><label>${item[0]}</label><strong>${item[1]}</strong><small>${item[2]}</small></article>`).join(""));
+    }
+    window.addEventListener("brandify-backend-ready", renderPaymentStats);
+    if (window.BrandifyBackend && window.BrandifyBackend.ready) window.BrandifyBackend.ready.then(renderPaymentStats);
+    window.addEventListener("brandify-storage-update", function (event) { if (event.detail && event.detail.key === "brandifyOrders") renderPaymentStats(); });
 });

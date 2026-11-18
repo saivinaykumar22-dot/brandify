@@ -252,6 +252,10 @@
         isConfigured: function () { return configured; },
         isAdmin: function () { return adminUser; },
         currentUser: getCurrentUser,
+        userIdForCreator: function (creatorKeyValue) {
+            const profile = profileCache.find(function (item) { return item.creator_key === creatorKeyValue; });
+            return profile ? profile.user_id : null;
+        },
         signUp: async function (details) {
             if (!client) throw new Error("Supabase is not configured yet.");
             return client.auth.signUp({

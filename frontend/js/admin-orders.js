@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     return sum + ((item.masterProductId || item.productId) === productId ? Math.max(0, Number(item.quantity) || 0) : 0);
                 }, 0);
             }, 0);
-        const processingOrders = D.orders().filter(function (order) { return order && order.inventoryReservation === "active" && ["Processing", "Shipped", "Out for Delivery"].includes(order.status); })
+        const processingOrders = D.orders().filter(function (order) { return order && order.inventoryReservation === "active" && ["Awaiting Payment", "Processing", "Shipped", "Out for Delivery"].includes(order.status); })
             .reduce(function (total, order) {
                 return total + (order.items || []).reduce(function (sum, item) {
                     return sum + ((item.masterProductId || item.productId) === productId ? Math.max(0, Number(item.quantity) || 0) : 0);
@@ -69,9 +69,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const history = (request.statusHistory || []).map(function (entry) { return `<li><strong>${esc(entry.status)}</strong><span>${esc(entry.timestamp || "")}${entry.reason ? ` · ${esc(entry.reason)}` : ""}</span></li>`; }).join("");
         const canReview = ["Awaiting Approval", "Resubmitted"].includes(request.status);
         const reasonForm = reasonAction ? `<form id="requestReasonForm" class="request-reason-form"><label for="requestReason">${reasonAction === "Rejected" ? "Reason for rejection" : "What needs to change?"}</label><textarea id="requestReason" class="admin-input" rows="3" required maxlength="500"></textarea><p class="admin-form-error" id="requestReasonError" role="alert"></p><div class="admin-form-actions"><button type="button" class="admin-button" data-cancel-reason>Cancel</button><button type="submit" class="admin-button primary">${reasonAction === "Rejected" ? "Reject request" : "Send change request"}</button></div></form>` : "";
-        return `<section class="request-review-detail"><div class="request-review-heading"><div><h3>${esc(request.requestId)} · ${esc(request.status)}</h3><p>${esc(request.brandName || "Brand not set")} · ${esc(request.creatorName || "Creator")}</p></div><button type="button" class="admin-button" data-close-review>Close</button></div><div class="request-review-grid"><div><h4>Customer</h4><p>${esc(request.customer && request.customer.name || "—")}</p><p>${esc(request.customer && request.customer.phone || "—")}</p><p>${esc(request.customer && request.customer.email || "—")}</p></div><div><h4>Shipping address</h4><p>${formatAddress(request.shippingAddress)}</p><h4>Billing address</h4><p>${request.billingAddress && request.billingAddress.sameAsShipping ? "Same as shipping" : formatAddress(request.billingAddress && request.billingAddress.address)}</p></div></div><div class="request-review-products"><h4>Products and customization</h4>${items || "No products recorded"}</div><div class="request-review-grid"><div><h4>Customer payment reference</h4><p>${esc(request.customerPaymentStatus || "—")}</p></div><div><h4>Creator notes</h4><p>${esc(request.creatorNotes || "—")}</p></div></div>${request.changeReason ? `<p class="request-admin-note"><strong>Previous feedback:</strong> ${esc(request.changeReason)}</p>` : ""}<div class="request-review-products"><h4>Request history</h4><ol class="request-history">${history}</ol></div>${reasonForm}${canReview ? `<div class="admin-form-actions"><button type="button" class="admin-button" data-request-action="Needs Changes">Request Changes</button><button type="button" class="admin-button danger" data-request-action="Rejected">Reject</button><button type="button" class="admin-button primary" data-approve-request="${esc(request.requestId)}">Approve &amp; Start Processing</button></div>` : `<p class="admin-muted">This request is ${esc(request.status)} and is no longer awaiting review.</p>`}</section>`;
+        const suggestedAmount = (request.items || []).reduce(function (sum, item) { return sum + Number(item.fulfillmentCost || 0) * Number(item.quantity || 0); }, 0);
+        return `<section class="request-review-detail"><div class="request-review-heading"><div><h3>${esc(request.requestId)} · ${esc(request.status)}</h3><p>${esc(request.brandName || "Brand not set")} · ${esc(request.creatorName || "Creator")}</p></div><button type="button" class="admin-button" data-close-review>Close</button></div><div class="request-review-grid"><div><h4>Customer</h4><p>${esc(request.customer && request.customer.name || "—")}</p><p>${esc(request.customer && request.customer.phone || "—")}</p><p>${esc(request.customer && request.customer.email || "—")}</p></div><div><h4>Shipping address</h4><p>${formatAddress(request.shippingAddress)}</p><h4>Billing address</h4><p>${request.billingAddress && request.billingAddress.sameAsShipping ? "Same as shipping" : formatAddress(request.billingAddress && request.billingAddress.address)}</p></div></div><div class="request-review-products"><h4>Products and customization</h4>${items || "No products recorded"}</div><div class="request-review-grid"><div><h4>Customer payment reference</h4><p>${esc(request.customerPaymentStatus || "—")}</p></div><div><h4>Creator notes</h4><p>${esc(request.creatorNotes || "—")}</p></div></div>${request.changeReason ? `<p class="request-admin-note"><strong>Previous feedback:</strong> ${esc(request.changeReason)}</p>` : ""}<div class="request-review-products"><h4>Request history</h4><ol class="request-history">${history}</ol></div>${reasonForm}${canReview ? `<label class="admin-field">Fulfillment amount payable (₹)<input id="approvalAmount" type="number" min="0.01" step="0.01" value="${suggestedAmount.toFixed(2)}" required></label><div class="admin-form-actions"><button type="button" class="admin-button" data-request-action="Needs Changes">Request Changes</button><button type="button" class="admin-button danger" data-request-action="Rejected">Reject</button><button type="button" class="admin-button primary" data-approve-request="${esc(request.requestId)}">Approve · Await Payment</button></div>` : `<p class="admin-muted">This request is ${esc(request.status)} and is no longer awaiting review.</p>`}</section>`;
     }
-    async function approve(requestId, button) {
+    async function approve(requestId, amountInput, button) {
         if (button.disabled) return;
         button.disabled = true;
         function approvalError(message) { button.disabled = false; D.toast(message); }
@@ -112,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
         const now = new Date().toISOString();
-        const orderId = W.generateOrderId();
+        let orderId = W.generateOrderId();
         const items = request.items.map(function (item) {
             const master = products.find(function (entry) { return entry.id === (item.masterProductId || item.productId); }) || {};
             const creatorProduct = (request.creatorId === (localStorage.getItem("brandifyCreatorId") || "") ? W.list("brandifyMyProducts") : []).find(function (entry) { return entry.id === item.productId; }) || {};
@@ -120,11 +121,32 @@ document.addEventListener("DOMContentLoaded", function () {
             return Object.assign({}, item, { productName: item.productName || master.name || "Product", productImage: item.productImage || master.image || "", category: item.category || master.category || "", fulfillmentCost: unitCost, sellingPrice: item.sellingPrice != null ? item.sellingPrice : creatorProduct.sellingPrice || null, productSnapshot: { id: master.id || item.masterProductId || item.productId, name: item.productName || master.name || "Product", image: item.productImage || master.image || "", category: item.category || master.category || "", basePrice: unitCost } });
         });
         const totalQuantity = items.reduce(function (sum, item) { return sum + Number(item.quantity || 0); }, 0);
-        const amount = items.reduce(function (sum, item) { return sum + Number(item.fulfillmentCost || 0) * Number(item.quantity || 0); }, 0);
+        const amount = Number(amountInput && amountInput.value);
+        if (!Number.isFinite(amount) || amount <= 0 || Math.round(amount * 100) <= 0) { approvalError("Enter a valid fulfillment amount."); return; }
+        if (window.BrandifyBackend && window.BrandifyBackend.isConfigured()) {
+            const allocated = await window.BrandifyBackend.client.rpc("admin_generate_brandify_order_id");
+            if (allocated.error || !allocated.data) { approvalError(allocated.error && allocated.error.message || "Could not generate an official order ID."); return; }
+            orderId = allocated.data;
+        }
         const creatorRevenue = items.reduce(function (sum, item) { return sum + Number(item.sellingPrice || 0) * Number(item.quantity || 0); }, 0);
-        const nextOrder = { id: orderId, orderId: orderId, requestId: requestId, creatorId: request.creatorId, creatorName: request.creatorName, creatorEmail: request.creatorEmail || "", brandName: request.brandName || "", customer: request.customer, customerName: request.customer.name, customerPhone: request.customer.phone, customerEmail: request.customer.email || "", shippingAddress: request.shippingAddress, billingAddress: request.billingAddress, items: items, productName: items.map(function (item) { return `${item.productName} × ${item.quantity}`; }).join(", "), product: items.map(function (item) { return `${item.productName} × ${item.quantity}`; }).join(", "), quantity: totalQuantity, amount: amount, total: amount, creatorRevenue: creatorRevenue, customerPaymentStatus: request.customerPaymentStatus, creatorNotes: request.creatorNotes, orderSource: "manual", salesChannel: "Manual", status: "Processing", inventoryReservation: "active", statusHistory: [{ status: "Approved", timestamp: now, changedAt: now, changedBy: "admin" }, { status: "Processing", timestamp: now, changedAt: now, changedBy: "admin" }], approvedAt: now, approvedBy: "admin", createdAt: now, updatedAt: now };
+        const nextOrder = { id: orderId, orderId: orderId, requestId: requestId, creatorId: request.creatorId, creatorName: request.creatorName, creatorEmail: request.creatorEmail || "", brandName: request.brandName || "", customer: request.customer, customerName: request.customer.name, customerPhone: request.customer.phone, customerEmail: request.customer.email || "", shippingAddress: request.shippingAddress, billingAddress: request.billingAddress, items: items, productName: items.map(function (item) { return `${item.productName} × ${item.quantity}`; }).join(", "), product: items.map(function (item) { return `${item.productName} × ${item.quantity}`; }).join(", "), quantity: totalQuantity, amount: amount, total: amount, creatorRevenue: creatorRevenue, customerPaymentStatus: request.customerPaymentStatus, creatorNotes: request.creatorNotes, orderSource: "manual", salesChannel: "Manual", status: "Awaiting Payment", paymentStatus: "Pending", inventoryReservation: "active", statusHistory: [{ status: "Approved", timestamp: now, changedAt: now, changedBy: "admin" }, { status: "Awaiting Payment", timestamp: now, changedAt: now, changedBy: "admin" }], approvedAt: now, approvedBy: "admin", createdAt: now, updatedAt: now };
         allOrders.push(nextOrder);
         W.write("brandifyOrders", allOrders);
+        if (window.BrandifyBackend && window.BrandifyBackend.isConfigured()) {
+            try {
+                const backend = window.BrandifyBackend;
+                const userId = backend.userIdForCreator(request.creatorId);
+                if (!userId) throw new Error("Creator profile is unavailable. Refresh and try again.");
+                await backend.persistRecords("brandifyOrders", [nextOrder]);
+                const result = await backend.client.rpc("admin_set_fulfillment_payment", { p_order_id: orderId, p_creator_id: userId, p_amount_paise: Math.round(amount * 100) });
+                if (result.error) throw result.error;
+            } catch (error) {
+                await backend.client.from("brandify_records").delete().eq("record_type", "order").eq("record_id", orderId);
+                await backend.client.rpc("admin_remove_unpaid_fulfillment_payment", { p_order_id: orderId });
+                allOrders.splice(allOrders.indexOf(nextOrder), 1); W.write("brandifyOrders", allOrders);
+                approvalError(error.message || "Could not register payment. The order was not approved."); return;
+            }
+        }
         request.status = "Approved";
         request.orderId = orderId;
         request.approvedAt = now;
@@ -134,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
         request.statusHistory.push({ status: "Approved", timestamp: now, changedAt: now, changedBy: "admin", orderId: orderId });
         allRequests[index] = request;
         W.write("brandifyOrderRequests", allRequests);
-        W.notify("creator", request.creatorId, "ORDER_PROCESSING", `Order ${orderId} is being processed`, `Order ${orderId} is now being processed.`, request.requestId, orderId, `order:${orderId}:status:Processing`);
+        W.notify("creator", request.creatorId, "ORDER_AWAITING_PAYMENT", `Payment due for Order ${orderId}`, `Order ${orderId} is approved. Pay the fulfillment amount from Order Details to begin processing.`, request.requestId, orderId, `order:${orderId}:status:Awaiting Payment`);
         selectedRequestId = "";
         render();
         D.toast(`Order ${orderId} created successfully.`);
@@ -161,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const reasonForm = requestRoot.querySelector("#requestReasonForm");
         if (reasonForm) reasonForm.addEventListener("submit", function (event) { event.preventDefault(); const reason = reasonForm.querySelector("#requestReason").value.trim(); if (!reason) { reasonForm.querySelector("#requestReasonError").textContent = "Enter a reason to continue."; return; } changeRequest(selectedRequestId, reasonAction, reason); });
         const approveButton = requestRoot.querySelector("[data-approve-request]");
-        if (approveButton) approveButton.addEventListener("click", function () { approve(approveButton.dataset.approveRequest, approveButton); });
+        if (approveButton) approveButton.addEventListener("click", function () { approve(approveButton.dataset.approveRequest, requestRoot.querySelector("#approvalAmount"), approveButton); });
     }
     search.addEventListener("input", render);
     filter.addEventListener("change", render);
